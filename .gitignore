@@ -1,61 +1,45 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+# Dependency directories
+node_modules/
 
 # Compiled output
-/dist
-/tmp
-/out-tsc
-# Only exists if Bazel was run
-/bazel-out
+/dist/
+/tmp/
 
-# Dependencies
-/node_modules
+# Logs and cache files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+.pnpm/
+.pnpm-lock.yaml
+.npm/
+.npmrc
+.npm-integrity
+.cache
+.pnpm-store
 
-# Cordova
-/www
-/plugins
-/platforms
-
-# Electron
-/dist-electron
-/dist-packages
-/electron.main.js
-
-# IDEs and editors
-.idea/*
-!.idea/runConfigurations/
-!.idea/codeStyleSettings.xml
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*~
+._*
 .project
-.classpath
-.c9/
-*.launch
 .settings/
-xcuserdata/
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# Environment variables
+.env
 
-# Maven
-/target
-/log
+# Build files
+build/
+*.build.js
+*.build.js.map
 
-# Misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
-/reports
-/src/translations/template.*
-# /src/environments/.env.*
+.angular/cache
 
-# System Files
+# Miscellaneous
 .DS_Store
 Thumbs.db
