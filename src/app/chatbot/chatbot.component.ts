@@ -9,7 +9,7 @@ export class ChatbotComponent implements OnInit {
   isUploadNewPic = false;
   imagePath: any;
   isEditButtonClicked = false;
-  conversation: string = 'Bot: Hi, what can I help you?';
+  conversation: string = 'Bot: Hi, how can I help you?';
   message!: string;
   constructor() { }
 
@@ -26,7 +26,7 @@ export class ChatbotComponent implements OnInit {
   async startChat() {
     // Provide a bot name and user input
     this.conversation = this.conversation + "\nYou: " + this.message;
-    var response = await Interactions.send("ScheduleAppointment_dev", this.message.toString());
+    var response = await Interactions.send("RetailOrderManagement", this.message.toString());
     //Log chatbot response
     console.log(response);
     this.message = '';
