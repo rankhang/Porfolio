@@ -1,0 +1,305 @@
+<app-add-fund-modal [accountBalance]="accountBalance" 
+                    [ownedWallets]="ownedWallets" 
+                    [db]="db" [auth]="auth" [user]="user" 
+                    ></app-add-fund-modal>
+
+<app-trade-coin-modal 
+  [selectedCoin]="aCoin" 
+  [ownedWallet]="ownedWallets"
+  [accountBalance]="accountBalance"
+  [coins]="coins"
+  [db]="db" [auth]="auth" [user]="user" 
+  
+  >
+</app-trade-coin-modal>
+
+<!-- Modal -->
+<div class="modal fade" id="exchangeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exchangeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-fullscreen-lg-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="row">
+            <div class="col-4">
+              <h2 class="modal-title" id="exchangeModalLabel">{{appExchangeName}}</h2>
+              <img height="100px" src="../../assets/game/wallets/Exchange Wallet.png">
+            </div>
+            <div class="col-8">
+              <div class="row">
+                <div class="col">
+                  <div class="badge bg-success text-wrap" style="font-size: medium;" >
+                    <span>Fund: {{ownedWallets[0] == undefined?'':ownedWallets[0].balance | currency:'USD'}}</span> 
+                  </div>
+                </div>
+                <div class="col">
+                  <button type="button" class="btn btn-sm btn-secondary" data-bs-target="#addFundModalToggle" data-bs-toggle="modal" (click)="onAddFundClicked()">Transfer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseButtonClicked()"></button>
+        </div>
+        <div class="modal-body">
+          <!--Tabs control-->
+          <div class="text-center">
+            <mat-button-toggle-group appearance="legacy" [(ngModel)]="selected">
+              <mat-button-toggle value = "wallet" (click)="onWalletClicked()">My Exchange Wallet</mat-button-toggle>
+              <mat-button-toggle value = "market" (click)="onMarketClicked()">Market</mat-button-toggle>
+              <mat-button-toggle value = "transaction" (click)="onTransactionClicked()" >Transaction History</mat-button-toggle>
+              <!-- <mat-button-toggle value = "trade" data-bs-toggle="modal" href="#tradeCoinModal">Trade</mat-button-toggle>     -->
+            </mat-button-toggle-group>
+          </div>
+
+<!--TEST SEARCH COIN-->
+
+          <!--MARKET-->
+          <div *ngIf="exchangeOptionTab == 'market'" style="overflow-x:hidden;" fxFlexFill cdkScrollable>
+            <hr>
+            <mat-toolbar class="search-block mat-elevation-z4" [class.active]="toggleSearch">
+                <mat-toolbar-row >
+                  <button class="search-icon" mat-icon-button disabled>
+                    <mat-icon>search</mat-icon>
+                  </button>
+                  <div class="form-outline" >
+                    <input  style="background-color: rgb(240, 236, 236);" type="search" id="form1" class="form-control" [(ngModel)]="searchCoin" #searchbar placeholder="Search" aria-label="Search" />
+                  </div>
+                  
+              </mat-toolbar-row>
+            </mat-toolbar>
+      
+            <mat-list>
+              <div  class="container">
+                <table class="table table-striped pt-5">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Coin</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">24h</th>
+                      <th scope="col">7d</th>
+                      <th scope="col">30d</th>
+                      <th scope="col">365d</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let coin of coins | filter: searchCoin let i = index;"  
+                        (click)="onCoinInMarketClicked(coin)" 
+                        style=" cursor:pointer;"
+                        data-bs-dismiss="modal"
+                         >
+
+                        
+                        
+                          <th scope="row">{{i+1}}</th>
+                          <td><img height="20px" src="../../assets/game/coins/{{coin.name.toLowerCase()}}.png"> {{coin.name}}</td>
+                          <td>{{coin.last24HoursValue[23]| currency:'USD'}}</td>
+                          <td><app-price [fontSize]="'smallFontSize'" [selectedCoin]="coin" [chosenChart]="'DAY_CHART'"></app-price></td>
+                          <td><app-price [fontSize]="'smallFontSize'" [selectedCoin]="coin" [chosenChart]="'WEEK_CHART'"></app-price></td>
+                          <td><app-price [fontSize]="'smallFontSize'" [selectedCoin]="coin" [chosenChart]="'MONTH_CHART'"></app-price></td>
+                          <td><app-price [fontSize]="'smallFontSize'" [selectedCoin]="coin" [chosenChart]="'YEAR_CHART'"></app-price></td>
+                    </tr>
+                </tbody>
+                </table>
+              </div>
+              <mat-list-item *ngIf="(coins | filter: searchCoin).length === 0">
+                <mat-icon mat-list-avatar>error</mat-icon>
+                <div mat-line>0 results</div>
+                <div mat-line>No matching coins</div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+<!--END TEST-->
+
+          <!--Wallet-->
+            <div *ngIf="exchangeOptionTab == 'wallet'">
+              
+
+
+              <div class="pt-2" *ngIf="ownedWallets[0] == undefined?'':ownedWallets[0].currentCapacity == 0 ;else walletDetail">
+                <div class="alert alert-warning" role="alert">
+                  Your exchange wallet is empty! 
+                  <button style="float: right;" class=" btn btn-sm btn-success" data-bs-toggle="modal" href="#tradeCoinModal">Buy Now</button>
+                </div>
+                
+              </div>
+
+              <ng-template #walletDetail>
+                <hr>
+                
+
+                <!--Percentage difference for a owned coin-->
+                <div class="row row-cols-auto" >
+                  <p class="col">Account Summary: <span class="money">{{exchangeWalletInvestmentCurrentlyTotal | currency: "USD"}}</span></p>
+                  <div class="col" *ngIf="exchangeWalletOriginalInvestment - exchangeWalletInvestmentCurrentlyTotal<=0; else negativePrice" >
+                    
+                      <p [ngClass]="'small'" style="color: rgb(8, 107, 8);" >
+                        <i class="bi bi-caret-up-fill"></i><span [ngClass]="'medium'" style="font-weight: 600;">{{math.abs(((exchangeWalletOriginalInvestment - exchangeWalletInvestmentCurrentlyTotal)/exchangeWalletOriginalInvestment*100)).toFixed(2) + "%"}}</span>
+                      </p>
+                  </div>
+                  <ng-template #negativePrice >
+                    <p style="color: rgb(128, 29, 29); " [ngClass]="'small'" class="col">
+                      <i class="bi bi-caret-down-fill"></i><span [ngClass]="'medium'" style="font-weight: 600;" >{{((exchangeWalletInvestmentCurrentlyTotal - exchangeWalletOriginalInvestment)/exchangeWalletOriginalInvestment*100).toFixed(2) + "%"}}</span>
+                    </p>
+                  </ng-template>
+                </div>
+                <!-- END Percentage difference-->
+                
+                <hr>
+                <div class="row row-cols-auto d-flex justify-content-center pt-5">
+                  
+                  
+                  <div *ngFor="let coin of ownedWallets[0]==undefined?[]:ownedWallets[0].coinsContent; let i = index">
+                        <div class="card text-bg-light mb-3" style="
+                        width: 8rem">
+                          <button class="btn" 
+                                  style="padding: 0;border: none;background: none;" 
+                                  (click)="onCoinInWalletClicked(coin)" 
+                                 
+                                  data-bs-dismiss="modal">
+                            <div class="card-header">
+                              <img height="20px" src="../../assets/game/coins/{{coin.coinName.toLowerCase()}}.png">
+                              <p style="font-size:x-small">{{coin.coinName}}</p>
+                            </div>
+                            <div class="card-body">
+                              <p class="card-title " style="font-size: x-small; text-align: center;">{{coin.amount-math.floor(coin.amount) == 0 ?coin.amount: coin.amount.toFixed(8)}}</p>
+                              <p class="fst-italic" style="font-size: xx-small;">{{coin.amount == 1? " coin" : " coins"}}</p>
+                            </div>
+                            <div class="card-footer">
+                              
+                              <!--Percentage difference for a owned coin-->
+                              <div class="row row-cols-auto" >
+                                <div class="col" *ngIf="coin.totalInvestment - coin.amount * coin.currentPrice <= 0; else negativePrice" >
+                                  
+                                  
+                                    <p style="color: rgb(8, 107, 8);">{{coin.amount * coin.currentPrice | currency:'USD'}}</p>
+                                    <p [ngClass]="'small'" style="color: rgb(8, 107, 8);" >
+                                      <i class="bi bi-caret-up-fill"></i><span [ngClass]="'medium'" style="font-weight: 600;">{{math.abs(((coin.totalInvestment - coin.amount * coin.currentPrice)/coin.totalInvestment*100)).toFixed(2) + "%"}}</span>
+                                    </p>
+                                  
+                                  
+                                </div>
+                                <ng-template #negativePrice >
+                                  <p style="color: rgb(128, 29, 29); ">{{coin.amount * coin.currentPrice | currency:'USD'}}</p>
+                                  <p style="color: rgb(128, 29, 29); " [ngClass]="'small'" class="col">
+                                    <i class="bi bi-caret-down-fill"></i><span [ngClass]="'medium'" style="font-weight: 600;" >{{((coin.amount * coin.currentPrice - coin.totalInvestment)/coin.totalInvestment*100).toFixed(2) + "%"}}</span>
+                                  </p>
+                                </ng-template>
+                              </div>
+                              <!-- END Percentage difference-->
+                            </div>
+                          </button>
+                        </div>
+                  </div>
+                </div>
+              </ng-template>
+
+            </div>
+          <!--END Wallet-->
+
+
+          <!--Transaction History-->
+            <div *ngIf="exchangeOptionTab=='transaction'">
+              <div *ngIf="transactions.length != 0; else transactionEmpty">
+                <div>
+                  <div class="btn-group dropstart" style="float: right;">
+                    <button type="button" class="btn btn-light dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
+                      Sort
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" (click)="onSortNoneClicked()">None</a></li>
+                      <li><a class="dropdown-item" (click)="onSortNewestClicked()">Newest</a></li>
+                      <li><a class="dropdown-item" (click)="onSortOldestClicked()">Oldest</a></li>
+                      <li><a class="dropdown-item" (click)="onSortNameClicked()">Name</a></li>
+                      <li><a class="dropdown-item" (click)="onSortBuyClicked()">Buy Type</a></li>
+                      <li><a class="dropdown-item" (click)="onSortSellClicked()">Sell Type</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <!--END sort-->
+  
+                <mat-list>
+                  <div  class="container">
+                    <table class="table table-striped pt-5">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Type</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Order #</th>
+                          <th scope="col">Coin</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="sortType==''; else sortDisplay">
+                        
+                          <tr *ngFor="let transaction of transactions ; let i = index;"  
+                            
+                             >
+                            
+                            
+                              <th scope="row">{{i+1}}</th>
+                              <td [style.color]="transaction.transactionColorControl">{{transaction.transactionType.toUpperCase()}}
+                              </td>
+                              <td>{{transaction.month + "/" + transaction.day + "/" + transaction.year}}</td>
+                              <td>{{"#"+transaction.transactionNumber}}</td>
+                              <td><img height="20px" src="../../assets/game/coins/{{transaction.coinName.toLowerCase()}}.png"> {{transaction.coinName}}</td>
+                              <td>{{transaction.coinAmount.toFixed(6)}}</td>
+                              <td>{{(transaction.price | currency:'USD') + "/each"}}</td>
+                              <td>{{transaction.orderTotal | currency:'USD'}}</td>
+                              
+                          </tr>
+                      </tbody>
+                        <ng-template #sortDisplay>
+                          <tbody>
+                            <tr *ngFor="let transaction of transactionSort; let i = index;"  
+                            style=" cursor:pointer;"
+                            data-bs-dismiss="modal"
+                             >
+                            
+                            
+                              <th scope="row">{{i+1}}</th>
+                              <td [style.color]="transaction.transactionColorControl">{{transaction.transactionType.toUpperCase()}}
+                              </td>
+                              <td>{{transaction.month + "/" + transaction.day + "/" + transaction.year}}</td>
+                              <td>{{"#"+transaction.transactionNumber}}</td>
+                              <td><img height="20px" src="../../assets/game/coins/{{transaction.coinName.toLowerCase()}}.png"> {{transaction.coinName}}</td>
+                              <td>{{transaction.coinAmount.toFixed(6)}}</td>
+                              <td>{{(transaction.price | currency:'USD') + "/each"}}</td>
+                              <td>{{transaction.orderTotal | currency:'USD'}}</td>
+                              
+                            </tr>
+                          </tbody>
+                        </ng-template>
+                        
+                    
+                    </table>
+                  </div>
+                  <mat-list-item *ngIf="(coins | filter: searchCoin).length === 0">
+                    <mat-icon mat-list-avatar>error</mat-icon>
+                    <div mat-line>0 results</div>
+                    <div mat-line>No matching coins</div>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+              <!--END Sort-->
+              <ng-template  #transactionEmpty>
+                <div class="alert alert-warning mt-2" role="alert">
+                    No transaction yet!
+                </div>
+              </ng-template>
+
+              
+            </div>
+
+            
+            
+
+
+        <!--END Tabs control-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCloseButtonClicked()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

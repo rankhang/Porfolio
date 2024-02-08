@@ -1,0 +1,25 @@
+<!-- <div  class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{errorCode}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{errorMessage}}
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="!isLogginSuccess" type="button" class="btn btn-secondary" routerLink="/game" data-bs-dismiss="modal">Try again</button>
+          <button *ngIf="isLogginSuccess" type="button" class="btn btn-secondary" routerLink="/game/home" data-bs-dismiss="modal">Play now</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="container">
+    <h2>{{errorCode}}</h2>
+    <hr>
+    <h4>{{errorMessage}}</h4>
+    <h4>{{errorSolution}}</h4>
+    <button type="button" (click)="onCloseErrorMessage()" class="btn btn-secondary">Got it</button>
+  </div>

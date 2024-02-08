@@ -1,0 +1,197 @@
+<app-game-navbar 
+    [userLastName]="userLastName"
+    [userFirstName]="userFirstName"
+    [gameMode]="gameMode"
+    [user]="user"
+    >
+</app-game-navbar>
+
+    <app-loading-screen [isLoading]="isLoading"></app-loading-screen>
+<div class="container" style="padding: 5% 5% 5% 5%;  max-width: 1700px; min-width: 1023px;">
+    <div>
+        
+        <!--Control bar-->
+        <div class="row gameControl" >
+            
+          <div class="col-3 pt-2"  ><!--style="padding-left: 20px"-->
+            
+            <div class="badge text-bg-light" disable style="cursor: pointer; font-size: medium; font-weight: 400;" (click)="onBalanceDisplayBoardClicked()" height="60px"><span style="font-size: x-small;">{{balanceDisplayObjectArray[balanceDisplayIndex].balanceName + ": "}}</span> <span class="money" style="font-weight: 500;">{{(balanceDisplayObjectArray[balanceDisplayIndex].balance| currency: 'USD')}}</span></div>
+            <!--TOOLTIP-->
+            <i tooltip="{{userLastName}}{{infoText.getAccountBalanceText()}}" placement="top" [showDelay]="300" class="bi bi-info-circle-fill info-tooltips" ></i>
+          </div>
+          <div class="col-3">
+            <div class="row">
+                <div class="col pt-1">
+                    <input tooltip="{{infoText.getWalletText()}}" placement="top" [showDelay]="300" data-bs-toggle="modal" data-bs-target="#walletModal" class="iconButton" type="image" src="../../assets/game/wallet.png" />
+                    <!-- TOOLTIP
+                    <i *ngIf="showInfo" tooltip="{{infoText.getWalletText()}}" placement="top" [showDelay]="200" class="bi bi-info-circle-fill info-tooltips" ></i> -->
+                </div>
+                <div class="col  pt-1 ">
+                    <input tooltip="{{infoText.getWalletStoreText()}}" placement="top" [showDelay]="300" data-bs-toggle="modal" data-bs-target="#storeModal"    class="iconButton" type="image" src="../../assets/game/store.png" />
+                    <!-- TOOLTIP
+                    <i *ngIf="showInfo" tooltip="{{infoText.getWalletStoreText()}}" placement="top" [showDelay]="200" class="bi bi-info-circle-fill info-tooltips" ></i> -->
+                </div>
+                <div class="col iconButton pt-1">
+                    <input  tooltip="{{infoText.getExchageText()}}" placement="top" [showDelay]="300" data-bs-toggle="modal" data-bs-target="#exchangeModal" class="iconButton" type="image" src="../../assets/game/exchange.png" />
+                    <!--TOOLTIP-->
+                    <!-- <i *ngIf="showInfo"  class="bi bi-info-circle-fill info-tooltips" ></i> -->
+                </div>
+            </div>
+          </div>
+          <div class="col-3 pt-2">
+            <div  class="badge text-bg-light" disabled style="font-size: medium; font-weight: 400;">{{dateString}}</div>
+            <!--TOOLTIP-->
+            <!-- <i *ngIf="showInfo" tooltip="{{infoText.getTimeText()}}" placement="top" [showDelay]="300" class="bi bi-info-circle-fill info-tooltips" ></i> -->
+          </div>
+          <div class="col-3">
+            <div class="row">
+                <div class="col  pt-1">
+                    <input tooltip="{{infoText.getSinglePlayText()}}" placement="top" [showDelay]="300"  *ngIf="!isSingleButtonClicked" class="iconButton" (click)="startTime('normal')" type="image" src="../../assets/game/play.png" />
+                    <input tooltip="{{infoText.getSinglePlayText()}}" placement="top" [showDelay]="300"  *ngIf="isSingleButtonClicked" class="iconButton" (click)="pauseTime()" type="image" src="../../assets/game/pause.png" />
+                    <!--TOOLTIP-->
+                    <!-- <i *ngIf="showInfo" class="bi bi-info-circle-fill info-tooltips" ></i> -->
+                    
+                </div>
+                <div class="col pt-1">
+                    <input tooltip="{{infoText.getDoublePlayText()}}" placement="top" [showDelay]="300"  *ngIf="!isDoubleButtonClicked" class="iconButton" (click)="startTime('fast')" type="image" src="../../assets/game/doubleplay.png" />
+                    <input tooltip="{{infoText.getDoublePlayText()}}" placement="top" [showDelay]="300"  *ngIf="isDoubleButtonClicked" class="iconButton" (click)="pauseTime()" type="image" src="../../assets/game/pause.png" />
+                    <!--TOOLTIP-->
+                    <!-- <i *ngIf="showInfo" tooltip="{{infoText.getDoublePlayText()}}" placement="top" [showDelay]="200" class="bi bi-info-circle-fill info-tooltips" ></i> -->
+                    
+                </div>
+                <div class="col  pt-1">
+                    <input tooltip="{{infoText.getTriplePlayText()}}" placement="top" [showDelay]="300"  *ngIf="!isTripleButtonClicked" class="iconButton" (click)="startTime('fastest')" type="image" src="../../assets/game/tripleplay.png" />
+                    <input tooltip="{{infoText.getTriplePlayText()}}" placement="top" [showDelay]="300"  *ngIf="isTripleButtonClicked" class="iconButton" (click)="pauseTime()" type="image" src="../../assets/game/pause.png" />
+                    <!--TOOLTIP-->
+                    <!-- <i *ngIf="showInfo" tooltip="{{infoText.getTriplePlayText()}}" placement="top" [showDelay]="300" class="bi bi-info-circle-fill info-tooltips" ></i> -->
+                    
+                </div>
+                <div class="col  pt-1">
+                    <input tooltip="Game Setting" placement="top" [showDelay]="300" class="iconButton" data-bs-toggle="modal" data-bs-target="#gameSetting"  type="image" src="../../../assets/game/settings.png" />
+                    
+                    <!--TOOLTIP-->
+                    <!-- <i *ngIf="showInfo" tooltip="{{infoText.getTriplePlayText()}}" placement="top" [showDelay]="300" class="bi bi-info-circle-fill info-tooltips" ></i> -->
+                    
+                </div>
+            </div>
+          </div>
+        </div>
+    
+    
+                <!--Loading Screen-->
+    
+    
+                <!--END Loading screen-->
+       
+        
+    </div>
+    <!--style="min-width: 967px; max-width: 1527px;"-->
+    
+    <div class="row gameBody" >
+        <!-- <div class="row" style="max-width: 1500px; min-width: 931px;"> -->
+        <div class="col-4" >
+            <cdk-virtual-scroll-viewport
+            itemSize="{{coins.length}}" 
+            class=" viewport" >
+                <!--Coin list-->
+                <div class="">
+                    <div class="row" *cdkVirtualFor="let coin of coins; let i = index" style="background-color: rgb(167, 196, 207);">
+                        
+                            <div class="row "  type="button" style="border-style: outset; padding-left: 10%;" (click)="onCoinClick(i)">
+                                <div class="col-4 pt-2">
+                                    <img height="50px" src="../../assets/game/coins/{{coin.name.toLowerCase()}}.png">
+                                </div>
+                                <div class="col-8">
+                                    <h4>{{coin.name}}</h4>
+                                    <h5 style="color: rgb(20, 107, 46);">{{coin.last24HoursValue[23] | currency: 'USD'}}</h5>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            
+            </cdk-virtual-scroll-viewport>
+        </div>
+        
+    
+        <div class="col-8 coin-graph" >
+            <app-coin-graph 
+                [coin]="selectedCoin"  
+                [selectedCoinIndex]="selectecCoinIndex"
+                [test]="second" 
+                [coins]="coins"
+                [label]="label"
+                [ownedWallet]="ownedWallets"
+                [accountBalance]="accountBalance"
+                [chosenChart]="chosenChart"
+                [month]="month"
+                [year]="year"
+                [day]="day"
+                [db]="db" [auth]="auth" [user]="user"
+                >
+            </app-coin-graph>
+
+            <div class="d-md-flex justify-content-md-end" style="padding-top: 5%;">
+                <mat-button-toggle-group [(ngModel)]="selected">
+                    <mat-button-toggle value="day" *ngIf="!isTripleButtonClicked;else error_content" (click)="onDayChartClicked()">1 day</mat-button-toggle>
+                    <ng-template #error_content><mat-button-toggle disabled="true" (click)="onDayChartClicked()">1 day</mat-button-toggle></ng-template>
+                    <mat-button-toggle value="week" (click)="onWeekChartClicked()">1 week</mat-button-toggle>
+                    <mat-button-toggle value="month" (click)="onMonthChartClicked()">1 month</mat-button-toggle>
+                    <mat-button-toggle value="year" (click)="onYearChartClicked()">1 year</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+    <!-- <div class="container pt-5">
+        <button *ngIf="showInfo ; else hide" class="btn btn-outline-light" (click)="onHideInfoClicked()">Hide info tips</button>
+        <ng-template #hide>
+            <button class="btn btn-outline-light" (click)="onHideInfoClicked()">Show info tips</button>
+        </ng-template>
+    </div> -->
+    
+    
+</div>
+
+    
+
+    
+
+
+
+
+
+
+    
+
+
+<app-store  [ownedWallets]="ownedWallets" [(accountBalance)]="accountBalance" [db]="db" [auth]="auth" [user]="user"></app-store>
+<app-wallet [ownedWallets]="ownedWallets" [coins]="coins" [db]="db" [auth]="auth" [user]="user" ></app-wallet>
+<app-exchange-wallet [db]="db" [auth]="auth" [user]="user" [ownedWallets]="ownedWallets" [accountBalance]="accountBalance" [transactions]="transactions"  [coins]="coins" [exchangeWalletInvestmentCurrentlyTotal]="exchangeWalletInvestmentCurrentlyTotal" [exchangeWalletOriginalInvestment]="exchangeWalletOriginalInvestment"></app-exchange-wallet>
+<app-game-setting [userLastName]="userLastName" [userFirstName]="userFirstName" [storageRef]="storageRef" [profilePicUrl]="profilePicUrl" [db]="db" [auth]="auth" [user]="user" [firebaseApp]="firebaseApp"></app-game-setting>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+

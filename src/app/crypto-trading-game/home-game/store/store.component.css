@@ -1,0 +1,19 @@
+
+
+.viewport {
+    height: 500px;
+    /* background-color: #072d3c; */
+  }
+
+.walletInfo{
+    font-size: 15px;
+}
+
+em{
+    color: green;
+    font-weight:900;
+}
+
+.detailFont{
+    font-weight: 600;
+}

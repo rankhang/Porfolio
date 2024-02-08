@@ -1,0 +1,67 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-porfoliov11-dev-233817-authRole",
+      "UnauthRoleArn": "arn:aws:iam::147225912326:role/amplify-porfoliov11-dev-233817-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::147225912326:role/amplify-porfoliov11-dev-233817-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-porfoliov11-dev-233817-deployment",
+      "UnauthRoleName": "amplify-porfoliov11-dev-233817-unauthRole",
+      "StackName": "amplify-porfoliov11-dev-233817",
+      "StackId": "arn:aws:cloudformation:us-east-1:147225912326:stack/amplify-porfoliov11-dev-233817/660c73b0-b0d8-11ed-878d-0e74c018307b",
+      "AmplifyAppId": "d2virns4ehw2fs"
+    }
+  },
+  "auth": {
+    "porfoliov11": {
+      "service": "Cognito",
+      "serviceType": "managed",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": []
+        },
+        "mfaTypes": [],
+        "verificationMechanisms": []
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-porfoliov11-dev-233817-deployment/amplify-cfn-templates/auth/porfoliov11-cloudformation-template.json",
+        "logicalId": "authporfoliov11"
+      },
+      "lastPushTimeStamp": "2023-02-21T04:18:06.295Z",
+      "output": {
+        "IdentityPoolId": "us-east-1:1802f116-0fe5-4f11-a25a-aeadd031641f",
+        "IdentityPoolName": "porfoliov11_identitypool_a7919b36__dev"
+      },
+      "lastPushDirHash": "Gd7c/BccPi4YwFonBtimMhqlHpo="
+    }
+  },
+  "interactions": {
+    "RKNhelpbot": {
+      "service": "Lex",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "lastPackageTimeStamp": "2023-02-20T04:51:02.338Z",
+      "distZipFilename": "RKNhelpbot-4c6348573855715a5751-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-porfoliov11-dev-233817-deployment",
+        "s3Key": "amplify-builds/RKNhelpbot-4c6348573855715a5751-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-porfoliov11-dev-233817-deployment/amplify-cfn-templates/interactions/RKNhelpbot-cloudformation-template.json",
+        "logicalId": "interactionsRKNhelpbot"
+      },
+      "lastPushTimeStamp": "2023-02-21T04:18:06.296Z",
+      "output": {
+        "FunctionArn": "arn:aws:lambda:us-east-1:147225912326:function:porfoliov11_cfnlambda_8584baef-dev",
+        "Region": "us-east-1",
+        "BotName": "ScheduleAppointment_dev"
+      },
+      "lastPushDirHash": "GbvUnMW6pz+iWRann1ZrDruMNX0="
+    }
+  }
+}

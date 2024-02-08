@@ -1,0 +1,86 @@
+<!--Review order Modal -->
+<div class="modal fade" id="reviewOrderModal" aria-hidden="true" aria-labelledby="reviewOrderCoinModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          
+          <div class="row">
+            <h2 class="modal-title col-6" id="reviewOrderCoinModalLabel">Review Order</h2>
+            <h3 class="col-3">{{tradeOption!="sell"?selectedCoin.name:selectedCoinInTheWallet==null?"":selectedCoinInTheWallet.name}}</h3>
+            <img class="col-2" height="40px" src="../../assets/game/coins/{{tradeOption!='sell'?selectedCoin.name.toLowerCase():selectedCoinInTheWallet == null?'':selectedCoinInTheWallet.name.toLowerCase()}}.png">
+            <app-price [selectedCoin]="tradeOption!='sell'?selectedCoin:(selectedCoinInTheWallet==null?selectedCoin:selectedCoinInTheWallet)">
+            </app-price>
+          </div>
+          <button type="button" #closeButton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+          <!--Action-->
+          <div class="row">
+            <p class="col">Action</p>
+            <p class="col">{{tradeOption.toUpperCase()}}</p>
+          </div>
+          <!--Quantity -->
+          <div class="row">
+            <p class="col">Quantity</p>
+            <p class="col">{{quantity!= null
+                            ?quantity
+                            :(moneyAmountToBuyCoinFraction! / selectedCoin.last24HoursValue[23]).toFixed(8)}}</p>
+          </div>
+          <hr>
+          <!--Current Balance-->
+          <div class="row">
+            <p class="col">Current Balance</p>
+            <p class="col">{{  ownedWallet[0]==undefined?'':ownedWallet[0].balance| currency:'USD'}}</p>
+          </div>
+
+          <div class="row">
+            <p class="col"></p>
+            <p class="col">{{tradeOption!="sell"?"-":"+"}}</p>
+          </div>
+
+          <!--Total Order-->
+          <div class="row">
+            <p class="col">Total Order</p>
+            <p class="col">{{tradeOption != "sell"
+                            ? (quantity!= null
+                              ?(quantity! * selectedCoin.last24HoursValue[23]| currency:'USD')
+                              : moneyAmountToBuyCoinFraction!  | currency:'USD')
+                            : quantity! * (selectedCoinInTheWallet==null?0: selectedCoinInTheWallet.last24HoursValue[23]) | currency:'USD' //SELL
+                          }}</p>
+          </div>
+
+          <hr>
+
+          <!--
+quantity!= null
+                            ? (accountBalance - quantity! * selectedCoin.last24HoursValue[23] | currency:'USD')
+                            : accountBalance - moneyAmountToBuyCoinFraction! | currency:'USD'
+
+          -->
+
+          <!--Balance after order-->
+          <div class="row">
+            <p class="col">Exchange Fund Balance After</p>
+            <p class="col">{{tradeOption != "sell"
+                            ? (quantity!= null
+                              ?(ownedWallet[0]==undefined?'':ownedWallet[0].balance - quantity! * selectedCoin.last24HoursValue[23] | currency:'USD')
+                              :(ownedWallet[0]==undefined?'':ownedWallet[0].balance - moneyAmountToBuyCoinFraction!) | currency:'USD')
+                            :  (ownedWallet[0]==undefined?'':ownedWallet[0].balance + (quantity! * (selectedCoinInTheWallet==null?0: selectedCoinInTheWallet.last24HoursValue[23])) | currency:'USD') //SELL
+            }}
+            </p>
+          </div>
+          
+          
+        </div>
+  
+        <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-target="#tradeCoinModal" data-bs-toggle="modal">Back</button>
+                <button (click)="onPlaceOrderClicked()" data-bs-dismiss="modal" type="button" class="btn btn-sm btn-info">Place Order</button>
+                <button type="button" class="btn btn-warning btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+</div>
+
+<app-loading-screen [isLoading]="isLoading"></app-loading-screen>

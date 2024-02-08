@@ -1,0 +1,87 @@
+<div class="modal fade" id="addFriendModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add a friend</h5>
+          <button  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form
+            [formGroup]="addFriendForm"
+            (ngSubmit)="onAddFriendSubmit(addFriendForm)"
+            [class.error]="!addFriendForm.valid && addFriendForm.touched"
+          >
+          <!--Email Box-->
+            <div class="mb-3">
+              <label for="emailInput" class="col-form-label">Email</label>
+              <input 
+                [class.is-invalid]="addFriendForm.get('email')?.invalid && addFriendForm.get('email')?.touched"
+                type="email" 
+                class="form-control" 
+                id="emailInput" 
+                [formControl]="$any(addFriendForm.controls['email'])"
+                > 
+            </div>
+
+            <div *ngIf="(addFriendForm.get('email')?.invalid && addFriendForm.get('email')?.touched) || addFriendForm.get('email')?.dirty">
+              <small class="text-danger" *ngIf="addFriendForm.get('email')?.hasError('required') ">Email address is required</small>
+              <small class="text-danger" *ngIf="addFriendForm.get('email')?.hasError('email')">Email address is invalid</small>
+            </div>
+
+            
+            <!--First Name Box-->
+            <div class="row">
+                <div class="mb-3 col">
+                    <label for="fNameInput" class="col-form-label">First name:</label>
+                    <input 
+                      [class.is-invalid]="addFriendForm.get('fName')?.invalid && addFriendForm.get('fName')?.touched"
+                      type="text" 
+                      class="form-control" 
+                      id="fNameInput" 
+                      [formControl]="$any(addFriendForm.controls['fName'])">
+                  </div>
+                  
+                  <div *ngIf="(addFriendForm.get('fName')?.invalid && addFriendForm.get('fName')?.touched) || addFriendForm.get('fName')?.dirty">
+                    <small class="text-danger" *ngIf="addFriendForm.get('fName')?.hasError('required') ">First name is required</small>
+                  </div>
+      
+                  <!--Last Name Box-->
+                  <div class="mb-3 col">
+                      <label for="lNameInput" class="col-form-label">Last name:</label>
+                      <input 
+                        [class.is-invalid]="addFriendForm.get('lName')?.invalid && addFriendForm.get('lName')?.touched"
+                        type="text" 
+                        class="form-control" 
+                        id="lNameInput" 
+                        [formControl]="$any(addFriendForm.controls['lName'])">
+                  </div>
+                  <div *ngIf="(addFriendForm.get('lName')?.invalid && addFriendForm.get('lName')?.touched) || addFriendForm.get('lName')?.dirty">
+                    <small class="text-danger" *ngIf="addFriendForm.get('lName')?.hasError('required') ">Last name is required</small>
+                  </div>
+            </div>
+
+            <!--Message Box-->
+            <div class="mb-3">
+                <label for="message" class="col-form-label">Message (Optional)</label>
+                <textarea class="form-control" id="message" [formControl]="$any(addFriendForm.controls['message'])"></textarea>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+              <button [disabled]="!addFriendForm.valid" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add me</button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

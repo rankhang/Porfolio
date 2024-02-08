@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "porfoliov11_identitypool_a7919b36",
+    "allowUnauthenticatedIdentities": true,
+    "authSelections": "identityPoolOnly",
+    "resourceName": "porfoliov11",
+    "sharedId": "a7919b36",
+    "serviceName": "Cognito",
+    "useDefault": "manual"
+  }
+}

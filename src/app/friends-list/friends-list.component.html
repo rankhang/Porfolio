@@ -1,0 +1,40 @@
+<app-nav-bar></app-nav-bar>
+<div class="wrapper">
+  
+  <table class="table table-success table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Last name</th>
+          <th scope="col">First name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Message</th>
+        </tr>
+      </thead>
+      <tbody>
+              <tr *ngFor="let aFriend of friends">
+                  <td>{{aFriend.lName}}</td>
+                  <td>{{aFriend.fName}}</td>
+                  <td>{{aFriend.email}}</td>
+                  <td>{{aFriend.message}}</td>
+                </tr>
+      </tbody>
+    </table>
+
+
+    <div>
+      <button 
+        type="button" 
+        class="btn text-lowercase" 
+        data-bs-toggle="modal" 
+        data-bs-target="#exampleModal" 
+        data-bs-whatever="@getbootstrap">
+        <span class="text-uppercase">a</span>dd me
+      </button>
+      <app-add-friend></app-add-friend>
+    </div>
+
+    
+</div>
+
+
+<app-social-media-link></app-social-media-link>

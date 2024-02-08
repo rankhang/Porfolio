@@ -1,0 +1,110 @@
+<app-loading-screen [isLoading]="isLoading"></app-loading-screen>
+<app-nav-bar></app-nav-bar>
+<div class="container">
+	<div class="row d-flex justify-content-center mt-5">
+		<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+			<div class="card py-3 px-2">
+				<p class="text-center mb-3 mt-2">Sign Up</p>
+		
+
+				<form 
+                    class="myform" 
+                    [formGroup]="signUpForm" 
+                    (ngSubmit)="onSignUpSubmit(signUpForm)"
+                    [class.error]="!signUpForm.valid && signUpForm.touched">
+                    
+                    <!--First Name Box-->
+                    <div class="form-group">
+    					<input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="First name"
+                            [formControl]="$any(signUpForm.controls['fname'])">
+  					</div>
+
+                    <div *ngIf="(signUpForm.get('fname')?.invalid && signUpForm.get('fname')?.touched) || signUpForm.get('fname')?.dirty">
+                    <small class="text-danger" *ngIf="signUpForm.get('fname')?.hasError('required') ">First name is required</small>
+                    </div>
+
+                    <!--Last Name Box-->
+                    <div class="form-group">
+    					<input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Last name"
+                            [formControl]="$any(signUpForm.controls['lname'])">
+  					</div>
+
+                    <div *ngIf="(signUpForm.get('lname')?.invalid && signUpForm.get('lname')?.touched) || signUpForm.get('lname')?.dirty">
+                    <small class="text-danger" *ngIf="signUpForm.get('lname')?.hasError('required') ">Last name is required</small>
+                    </div>  
+                    
+
+                    <!--Email Box-->
+					<div class="form-group">
+    					<input 
+                            [class.is-invalid]="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched"
+                            type="email" 
+                            class="form-control" 
+                            placeholder="Email"
+                            [formControl]="$any(signUpForm.controls['email'])">
+  					</div>
+
+                      <div *ngIf="(signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) || signUpForm.get('email')?.dirty">
+                        <small class="text-danger" *ngIf="signUpForm.get('email')?.hasError('required') ">Email address is required</small>
+                        <small class="text-danger" *ngIf="signUpForm.get('email')?.hasError('email')">Email address is invalid</small>
+                      </div>    
+                      
+
+                    <!--Password Box-->
+ 					<div class="form-group">
+    					<input 
+                            type="password" 
+                            class="form-control" 
+                            placeholder="Password"
+                            [formControl]="$any(signUpForm.controls['password'])">
+  					</div>
+                    <div *ngIf="(signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) || signUpForm.get('password')?.dirty">
+                        <small class="text-danger" *ngIf="signUpForm.get('password')?.hasError('required') ">Password is required</small>
+                        <small class="text-danger" *ngIf="signUpForm.get('password')?.hasError('minLength') ">Password must have at least 6 characters</small>
+                    </div>  
+
+                     <!--Retype Password Box-->
+                    <div class="form-group">
+    					<input 
+                            type="password" 
+                            class="form-control" 
+                            placeholder="Re-type password"
+                            [formControl]="$any(signUpForm.controls['retype-password'])">
+  					</div>
+
+                    <div *ngIf="(signUpForm.get('retype-password')?.invalid && signUpForm.get('retype-password')?.touched) || signUpForm.get('retype-password')?.dirty">
+                    <small class="text-danger" *ngIf="signUpForm.get('retype-password')?.hasError('required') ">Confirm password is required</small>
+                    <small class="text-danger" *ngIf="signUpForm.get('retype-password')?.hasError('NoPassswordMatch') ">Confirm password does not match</small>
+                   
+                    
+                    </div>  
+  					
+
+                    <!--Submit Box--> 
+  					<div class="form-group mt-3">
+  						<button 
+                            [disabled]="!signUpForm.valid"
+                            type="submit" 
+                            class="btn btn-block btn-primary btn-lg"
+                            
+                            ><small><i class="far fa-user pr-2"></i>Register</small></button>
+  					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+  
+  
+
+  <app-social-media-link></app-social-media-link>

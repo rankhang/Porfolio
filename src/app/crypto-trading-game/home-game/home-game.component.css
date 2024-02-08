@@ -1,0 +1,38 @@
+
+.gameControl{
+    background-color:rgb(43, 141, 180);
+}
+
+.gameBody{
+    background-color:rgb(167, 196, 207);
+    
+}
+
+.iconButton{
+    height:35px;
+}
+
+
+.coin-graph{
+    background-color: rgb(80, 135, 172);
+    /* width: 58%; */
+    border: 1px solid rgb(31, 21, 3);
+    /* min-height: 600px;
+    max-height: 1500px;
+    max-width: 1500px; */
+}
+  
+  
+  
+  img {
+    padding-left: 1em;
+  }
+  
+  .viewport {
+    min-height: 700px;
+    /* margin-left: 21%; */
+   /*  max-height: 900px;
+    min-width: 250px;
+    max-width: 900px; */
+    background-color: #072d3c;
+  }

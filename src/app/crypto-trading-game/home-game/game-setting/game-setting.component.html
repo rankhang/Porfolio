@@ -1,0 +1,73 @@
+<app-loading-screen [isLoading]="isLoading"></app-loading-screen>
+
+<!-- Modal -->
+<div class="modal fade" id="gameSetting" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="min-width: 650px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Setting</h5>
+          <button type="button" class="btn-close" (click)="onCloseClicked()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form #f="ngForm"
+        (ngSubmit)="onChangeSubmit(f.value)">
+            <div class="modal-body">
+
+                <div class=" row" >
+                    <div class="col-4">
+                        
+                        <label class="hoverable" for="fileInput">
+                            <img [src]=" !isUploadNewPic && user?.photoURL
+                                        ? user?.photoURL
+                                        : imagePath==undefined
+                                            ?'../../../../assets/profile-blank-pic/blank-profile-picture-g33c247d1f_1280.png'
+                                            :imagePath"> 
+                            <div class="hover-text">Choose file</div>
+                            <div class="background"></div>
+                        </label>
+                        <br/>
+                        <input id="fileInput" type='file' (change)="onSelectFile($event)">
+                    </div>
+                    <div class="col-8">
+                        
+                            <div class="row">
+                                <div class="col">
+                                    <label for="fname"><p>First Name</p></label><!--#fname (change)="onFirstNameChanged(fname.value)"  value="{{userFirstName}}"-->
+                                    <input ngModel type="text" name="fname" id="fname"  [disabled]="!isEditButtonClicked" placeholder="{{userFirstName}}" >
+                                </div>
+                                <div class="col">
+                                    <label for="lname"><p>Last Name</p></label>
+                                    <input ngModel type="text" name="lname" id="lname" [disabled]="!isEditButtonClicked" placeholder="{{userLastName}}">
+                                </div>
+                                <div class="col" (click)="onEditClicked()">
+                                    <i class="bi bi-pencil-square"></i>
+                                </div>
+                                
+                                <!-- <button class="col-2 btn btn-sm btn-primary" *ngIf="lnameInput !=='' || fnameInput !==''" (click)="onEditDoneClicked()">Done
+                                    <i class="bi bi bi-check2-square"></i>
+                                </button> -->
+                            </div>
+
+                            <hr>
+                            <div class="row">
+                                <p>Game Setting --- Coming soon</p> 
+                            </div>
+                    </div>
+                </div>
+
+                <hr>
+
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="onCloseClicked()" data-bs-dismiss="modal">Close</button>
+            <button [disabled]="!this.isUploadNewPic 
+                                    && (!this.isEditButtonClicked || (f.value.fname == '' && f.value.lname == '') )"
+                    type="submit" class="btn btn-primary" 
+                    data-bs-dismiss="modal">Change</button>
+            </div>
+        </form>    
+      </div>
+    </div>
+  </div>
+
+

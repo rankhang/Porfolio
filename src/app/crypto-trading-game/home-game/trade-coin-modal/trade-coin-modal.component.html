@@ -1,0 +1,355 @@
+<app-review-order-modal
+  [quantity]="quantity"
+  [selectedCoin]="selectedCoin"
+  [ownedWallet]="ownedWallet"
+  [tradeOption]="tradeOption"
+  [accountBalance]="accountBalance"
+  [moneyAmountToBuyCoinFraction]="moneyAmountToBuyCoinFraction"
+  [selectedCoinInTheWallet]="selectedCoinInTheWallet"
+  [chosenWallet]="chosenWallet"
+  [month]="month"
+  [year]="year"
+  [day]="day"
+  [db]="db"  [user]="user" 
+  [auth]="auth"
+>
+</app-review-order-modal>
+
+<!-- Modal -->
+<div class="modal fade" id="tradeCoinModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="tradeCoinModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header" *ngIf="tradeOption != 'sell'">
+        <div class="row">
+          <div class="pb-4">
+            <div class=" d-inline p-2">
+              <div class="badge bg-success text-wrap" style="width: 9rem; font-size: medium;" >
+               Available Fund: {{ownedWallet[0] == undefined?'':ownedWallet[0].balance | currency:'USD'}}
+              </div>
+            </div>
+            <div class=" d-inline p-2">
+              <div style="cursor: pointer; font-size: medium;" class="badge text-bg-secondary" data-bs-target="#addFundModalToggle" data-bs-toggle="modal" (click)="onAddFundClicked()">Transfer Fund</div>
+            </div>
+            
+          </div>
+          <!-- <h2 class="modal-title col " id="tradeCoinModalLabel">Trade </h2> -->
+          <img style="height: 40px; width :70px;" src="../../assets/game/coins/{{(selectedCoin.name).toLowerCase()}}.png">
+          <h3 class="col">{{selectedCoin.name}}</h3>
+          
+          <div class= "col" [class.hidden]="toggleSearch">
+            <button mat-icon-button (click)="openSearch()">
+                <mat-icon style="transform: scale(2);">search</mat-icon> Search
+            </button>   
+          </div>
+        </div>
+        <button type="button" #closeButton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="searchClose()"></button>
+
+      </div>
+      
+      <div class="modal-body">
+        <div *ngIf="tradeOption != 'sell'">
+          <div class="row">
+            <p class="col-3">Current Price: <span class="money">{{selectedCoin.last24HoursValue[23] | currency:'USD'}}</span></p>
+            <app-price class="col" [selectedCoin]="selectedCoin" [chosenChart]="'DAY_CHART'" [fontSize]="'medium'" [arrowFontSize]="'small'" ></app-price>
+          </div>
+          
+        </div>
+        
+      
+        <hr>
+        <div class="row">
+          <div class="col">
+            <p>
+              Action:
+              <mat-button-toggle-group appearance="legacy"[(ngModel)]="selected">
+                <mat-button-toggle value = "buy" (click)="onBuyClicked()">Buy</mat-button-toggle>
+                <mat-button-toggle value = "sell" (click)="onSellClicked()">Sell</mat-button-toggle>
+              </mat-button-toggle-group>
+            </p>
+          </div>
+          
+          <div class="col">
+            <!--BUY-->
+            <div *ngIf="tradeOption == 'buy'">
+              <!--Quantity Input-->
+                <div class="row">
+                  <div class="col">
+                    <label for="quantity">Quantity &nbsp;</label>
+                    <input id="quantity" name="quantity" type="number" [(ngModel)]="quantity" (click)="quantityInputClicked()">
+                  </div>
+                  <div class="col">
+                    <label>Estimate price &nbsp;</label>
+                    <span class="input-group-text ps-3">{{math.abs(quantity! * (selectedCoin.last24HoursValue[23])) | currency:'USD'}}</span>
+                  </div>
+                </div>
+              <!--Money Input (buy fraction of a coin)-->
+              <div class="row pt-3">
+                <div class="col">
+                  <label for="amount">$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <input id="amount" 
+                          name="amount" 
+                          type="text" 
+                          [(ngModel)]="moneyAmountToBuyCoinFraction" 
+                          mvndrMatCurrencyFormat
+                          [allowNegative]="false"
+                          [currencyCode]="'USD'"
+                          [value]="usAmount"
+                          (blur)="updateUSAmount($event)"
+                          (click)="coinAmountInputClicked()">
+                </div>
+                <div class="col">
+                  <label>Estimate coin amount &nbsp;</label>
+                  <span class="input-group-text ps-3">{{math.abs((moneyAmountToBuyCoinFraction! / (selectedCoin.last24HoursValue[23]))).toFixed(8)}}</span>
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <div class="alert alert-danger" role="alert" *ngIf="quantity! * (selectedCoin.last24HoursValue[23]) > ownedWallet[0].balance || moneyAmountToBuyCoinFraction! > ownedWallet[0].balance">
+                  Not Enough Fund
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <div class="alert alert-danger" role="alert" *ngIf="quantity! < 0 || moneyAmountToBuyCoinFraction! < 0">
+                  Negative amount is not allowed!
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!--SELL-->
+        <div *ngIf="tradeOption == 'sell'">
+          <p>Please choose your wallet</p>
+            <div style="text-align: center;">
+              <mat-button-toggle-group [formControl]="walletControl" appearance="legacy" name="fontStyle" aria-label="Font Style">
+                <div class="row row-cols-auto d-flex justify-content-center">
+                  <div class="col" *ngFor="let wallet of ownedWallet; let i = index">
+                    <div class="card">
+                      <mat-button-toggle value = {{wallet.walletName}} (click)="onWalletClicked(i)">
+                        <div class="card-body">
+                          <img class="" height="80px" src="../../assets/game/wallets/{{wallet.walletName}}.png">
+                          <h5 class=" card-title">{{wallet.walletName}}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted"> {{wallet.isPurchased
+                                                                      ? wallet.currentCapacity ==0
+                                                                            ?"Empty"
+                                                                            : "Contain: " + wallet.currentCapacity + " coins"
+                                                                      : "Unavailable"  }}
+                            </h6>
+                          <p class="card-text"></p>
+                        </div>
+                      </mat-button-toggle>
+                    </div>
+                  </div>
+                </div>
+              </mat-button-toggle-group>
+            </div>
+            
+
+            
+            <div *ngIf = "walletControl.value != null" class="pt-4">
+              <!--When wallet does not hold any coin-->
+              <div *ngIf="!chosenWallet.isPurchased; else walletEmptyMessage" class="alert alert-warning" role="alert">
+                Wallet not owned! Please purchase this wallet at the store.
+              </div>
+              <ng-template #walletEmptyMessage>
+                <div *ngIf="chosenWallet.currentCapacity == 0; else currentCapacityThen" class="alert alert-warning" role="alert">
+                  You do not have any coin in this wallet!
+                </div>
+              </ng-template>
+              
+              <ng-template #currentCapacityThen>
+                <!--When a coin in the wallet clicked-->
+                <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
+                  <!--Content coins list-->
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {{chosenWallet.walletName}}
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                      <div class="accordion-body">
+                        
+                          <div class="row row-cols-auto d-flex justify-content-center">
+                            <div *ngFor="let coin of chosenWallet.coinsContent; let i = index">
+                                  <div class="card text-bg-light mb-3" style="
+                                  width: 8rem">
+                                    <button class="btn" style="padding: 0;border: none;background: none;" (click)="onCoinInWalletClicked(i)" data-bs-toggle="collapse" data-bs-target="#collapseOne" >
+                                      <div class="card-header">
+                                        <img height="20px" src="../../assets/game/coins/{{coin.coinName.toLowerCase()}}.png">
+                                        <p style="font-size:x-small">{{coin.coinName}}</p>
+                                      </div>
+                                      <div class="card-body">
+                                        <p class="card-title " style="font-size: x-small; text-align: center;">{{coin.amount-math.floor(coin.amount) == 0 ?coin.amount: coin.amount.toFixed(8)}}</p>
+                                        <p class="fst-italic" style="font-size: xx-small;">{{coin.amount == 1? " coin" : " coins"}}</p>
+                                      </div>
+                                    </button>
+                                  </div>
+                            </div>
+                          </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+
+
+                    <!--Picked coin-->
+                    <div *ngIf="isCoinButtonInAWalletClicked">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Quantity
+                          </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                                <!--Coin card-->
+                                <div class="row">
+                                  <div class="d-flex col">
+                                    <div class="card text-bg-light mb-3" style="width: 8rem">
+                                      <div class="card-header">
+                                        <img height="20px" src="../../assets/game/coins/{{selectedOwnedCoinInTheWallet.coinName.toLowerCase()}}.png">
+                                        <p style="font-size:x-small">{{selectedOwnedCoinInTheWallet.coinName}}</p>
+                                      </div>
+                                      <div class="card-body">
+                                        <p class="card-title " style="font-size: x-small; text-align: center;">{{selectedOwnedCoinInTheWallet.amount-math.floor(selectedOwnedCoinInTheWallet.amount) == 0 ?selectedOwnedCoinInTheWallet.amount: selectedOwnedCoinInTheWallet.amount.toFixed(8)}}</p>
+                                        <p class="fst-italic" style="font-size: xx-small;">{{selectedOwnedCoinInTheWallet.amount == 1? " coin" : " coins"}}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col">
+                                    <div class="row">
+                                      <p class="col" style="font-size: small;">Current Price: <span style="font-size: large;" class="money">{{selectedCoinInTheWallet.last24HoursValue[23]|currency:'USD'}}</span></p>
+                                      <p class="col">24h: <app-price class="col" [selectedCoin]="selectedCoinInTheWallet" [chosenChart]="'DAY_CHART'"></app-price></p>
+                                      
+                                    </div>
+                                    <!--Input quantity-->
+                                    <div class="row">
+                                      <div class="col">
+                                        <label for="quantity">Quantity &nbsp;</label>
+                                        <input id="quantity" name="quantity" min="0" type="number" [(ngModel)]="quantity">
+                                        <button class=" mt-2 btn btn-sm btn-secondary" style="float: right;" (click)="onAllButtonClicked()">all</button>
+                                      </div>
+                                      <div class="col">
+                                        <label>Estimate price &nbsp;</label>
+                                        <span class="input-group-text ps-3">{{(math.abs(quantity! * selectedCoinInTheWallet.last24HoursValue[23]) | currency:'USD') }}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="pt-2">
+                                    <div class="alert alert-danger" role="alert" *ngIf="quantity! > selectedOwnedCoinInTheWallet.amount">
+                                      Not enough coins to sell!
+                                    </div>
+                                  </div>
+
+                                  <div class="pt-2">
+                                    <div class="alert alert-danger" role="alert" *ngIf="quantity! < 0">
+                                      Negative amount is not allowed!
+                                    </div>
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                </div>
+              </ng-template>
+            </div>
+      </div>
+
+
+      
+
+
+<!--SEARCH COIN-->
+    <div *ngIf="toggleSearch" style="overflow-x:hidden;" fxFlexFill cdkScrollable>
+      <hr>
+      <mat-toolbar class="search-block mat-elevation-z4" [class.active]="toggleSearch">
+          <mat-toolbar-row >
+            <button class="search-icon" mat-icon-button disabled>
+              <mat-icon>search</mat-icon>
+            </button>
+            <div class="form-outline" >
+              <input style="background-color: rgb(240, 236, 236);" type="search" id="form1" class="form-control" [(ngModel)]="searchCoin" #searchbar placeholder="Search" aria-label="Search" />
+            </div>
+            <!-- <input class="search-control" type="text" placeholder="Search" [(ngModel)]="searchCoin" #searchbar> -->
+            <button mat-button mat-icon-button (click)="searchClose()">
+              <mat-icon>close</mat-icon>
+            </button> 
+
+            <!--SHOW & HIDE BUTTON-->
+            <div *ngIf="!isShowAllClicked; else hideAll">
+              <button class="btn btn-sm btn-info" (click)="onShowAllButtonClicked()">Show All</button>
+            </div>
+            <ng-template #hideAll>
+              <button class="btn btn-sm btn-info" (click)="onShowAllButtonClicked()">Hide All</button>
+            </ng-template>
+            
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+      <mat-list *ngIf="searchCoin !='' || isShowAllClicked">
+        <div class="row row-cols-auto d-flex justify-content-center">
+        <div *ngFor="let coin of coins  | filter: searchCoin">
+
+            <div class="card text-bg-light mb-3" style="
+            width: 8rem">
+              <button class="btn" style="padding: 0;border: none;background: none;" (click)="onSearchCoinButtonClicked(coin)">
+                <div class="card-header">
+                  <img height="20px" src="../../assets/game/coins/{{coin.name.toLowerCase()}}.png">
+                  <p style="font-size:x-small">{{coin.name}}</p>
+                </div>
+                <div class="card-body">
+                  <p class="card-text " style="font-size:xx-small; text-align: center;">Current price:</p>
+                  <p class="card-title " style="font-size: x-small; text-align: center;">{{coin.last24HoursValue[23] | currency:'USD'}}</p>
+                </div>
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <mat-list-item *ngIf="(coins | filter: searchCoin).length === 0">
+          <mat-icon mat-list-avatar>error</mat-icon>
+          <div mat-line>0 results</div>
+          <div mat-line>No matching coins</div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+<!--END SEARCH COIN-->
+
+
+
+      <div class="modal-footer">
+     
+        <button *ngIf="tradeOption=='buy'
+                        ?
+                        (quantity == null  && moneyAmountToBuyCoinFraction == null )
+                        || quantity != null
+                            ? 
+                            !(quantity != null && quantity! > 0 && quantity! * selectedCoin.last24HoursValue[23]< ownedWallet[0].balance)
+                        :!(moneyAmountToBuyCoinFraction!= null && moneyAmountToBuyCoinFraction! > 0 && moneyAmountToBuyCoinFraction! <= ownedWallet[0].balance)
+                       : 
+                       quantity! <= 0 
+                       || quantity == null
+                       || quantity > selectedOwnedCoinInTheWallet.amount
+                       
+                        
+                       ;else reviewOrderButton" disabled type="button" class="btn btn-secondary">Review Order
+          </button>
+        <ng-template #reviewOrderButton><button data-bs-target="#reviewOrderModal" data-bs-toggle="modal" type="button" class="btn btn-info" (click)="onReviewOrderClicked()">Review Order</button></ng-template>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="searchClose()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+

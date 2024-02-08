@@ -1,0 +1,142 @@
+<app-loading-screen [isLoading]="isLoading"></app-loading-screen>
+
+<div class="modal fade" id="addFundModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" aria-labelledby="addFundModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="addFundModalToggleLabel">Transfer</h2>
+          <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal" (click)="onClosedClicked()" ></button> 
+        </div>
+        <div class="modal-body">
+          <div style="background-color: rgb(214, 214, 204);">
+            <div class="p-3">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button #closeAccordionOneButtonToggle class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Select Account
+                        </button>
+                      </h2>
+                      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <!--FORM -->
+                            <form [formGroup]="transferForm" 
+                                >
+                                <div class="pt-2">
+                                    <!--FROM Account-->
+                                    <label for="fromAccount">From</label>
+                                    <select (change)="onFromAccountChange()" id="fromAccount" class="form-select" aria-label="Default select example" [formControl]="$any(transferForm.controls['fromAccount'])">
+                                        <option  selected disabled>Select Account</option>
+                                        <option  value="Personal Account">Personal Account ({{accountBalance|currency:'USD'}})</option>
+                                        <option disabled>-------------</option>
+                                        <option disabled>Exchange Fund</option>
+                                        <option value="KN Exchange">KN Exchange ({{ownedWallets[0]== null?'':ownedWallets[0].balance|currency:'USD'}})</option>
+                                        
+                                      </select>
+                                </div>
+                                <!--FROM ACCOUNT ERROR-->
+                                <div *ngIf="isContinueButtonClicked && !isFromAccountSelectClear" class="alert alert-danger mt-2" role="alert">
+                                    <small class="text-danger">This field is required</small>
+                                </div>
+
+                                <div class="pt-2">
+                                    <!--TO Account-->
+                                    <label for="toAccount">To</label>
+                                    <select (change)="onToAccountChange()" id="toAccount" class="form-select" aria-label="Default select example" [formControl]="$any(transferForm.controls['toAccount'])">
+                                        <option selected disabled>Select Account</option>
+                                        <option [disabled]="isTOPersonalAccountDisabled" value="Personal Account">Personal Account ({{accountBalance|currency:'USD'}})</option>
+                                        <option disabled>-------------</option>
+                                        <option disabled>Exchange Fund</option>
+                                        <option [disabled]="isTOExchangeWalletDisabled" value="KN Exchange">KN Exchange ({{ownedWallets[0]== null?'':ownedWallets[0].balance|currency:'USD'}})</option>
+                                        
+                                    </select>
+                                </div>
+                                
+                                <!--TO ACCOUNT ERROR-->
+                                
+                                <div *ngIf="isContinueButtonClicked && !isToAccountSelectClear" class="alert alert-danger mt-2" role="alert">
+                                    <small class="text-danger">This field is required</small>
+                                </div>
+
+                                <!--Continue Button-->
+                                <div class="d-grid gap-2 pt-5 ">
+                                    <button type="submit" 
+                                    *ngIf="!transferForm.valid; else continueButton"
+                                    (click)="onContinueClicked()"
+                                    class="btn btn-secondary">Continue
+                                    </button>
+                                    <ng-template #continueButton>
+                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" data-bs-target="#collapseTwo">Continue</button>
+                                    </ng-template>
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingTwo">
+                        <button #closeAccordionTwoButtonToggle [disabled]="!transferForm.valid" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"  aria-expanded="false" aria-controls="collapseTwo">
+                          Tranfer Amount
+                        </button>
+                      </h2>
+                      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            
+                                <label for="bankTransferAmount">$ &nbsp;</label>
+                                <input  id="bankTransferAmount"  
+                                        name="bankTransferAmount" 
+                                        mvndrMatCurrencyFormat
+                                        [allowNegative]="false"
+                                        [currencyCode]="'USD'"
+                                        [value]="usAmount"
+                                        (blur)="updateUSAmount($event)"  
+                                        type="text" 
+                                        [(ngModel)]="bankTransferAmount"
+                                        >
+
+                                <!---->
+
+                                <div class="d-grid gap-2 pt-5 " >
+                                    <button [disabled]="bankTransferAmount <= 0 
+                                                        || bankTransferAmount== 0 
+                                                    
+                                                        || bankTransferAmount== undefined 
+                                                        || bankTransferAmount== null
+                                                        || bankTransferAmount > accountBalance"
+                                                        (click)="onTransferClicked()" 
+                                                        class="btn btn-primary" 
+                                                        type="button">Transfer
+                                    </button>
+                                </div>    
+
+                                <div *ngIf="bankTransferAmount<=0 
+                                            && bankTransferAmount != null" 
+                                            class="alert alert-danger mt-2" 
+                                            role="alert">
+                                    <small>Invalid Amount To Transfer </small>
+                                </div>
+
+                                <div *ngIf="fromAccountString=='Personal Account' && toAccountString =='KN Exchange'
+                                            ?bankTransferAmount > accountBalance
+                                            :ownedWallets[0]==null?'':ownedWallets[0].balance < bankTransferAmount"  
+                                    class="alert alert-danger mt-2" role="alert">
+                                    <small>Not Enough Balance </small>
+                                </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+            </div>
+            
+              
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" #onCloseModalToggle data-bs-dismiss="modal" (click)="onClosedClicked()" >Close</button>
+        </div>
+      </div>
+    </div>
+</div>

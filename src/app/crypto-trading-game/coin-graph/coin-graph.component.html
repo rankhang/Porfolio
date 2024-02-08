@@ -1,0 +1,87 @@
+
+    <app-trade-coin-modal 
+      [selectedCoin]="coin" 
+      [ownedWallet]="ownedWallet"
+      [accountBalance]="accountBalance"
+      [coins]="coins"
+      [month]="month"
+      [year]="year"
+      [day]="day"
+      [db]="db" [auth]="auth" [user]="user" 
+    >
+    </app-trade-coin-modal>
+
+
+  <div class="row pt-3">
+    <div class="col-2">
+      <img height="50px" src="../../assets/game/coins/{{coin.name.toLowerCase()}}.png">
+      {{coin.name}}
+    </div>
+    
+      
+      <div class="col-8">
+            <div class="row justify-content-md-center">
+              <div class="col-3">
+                <p style="color: rgb(34, 88, 34); font-weight: 500; font-size:large;">{{coin.last24HoursValue[23] | currency: 'USD'}}</p>
+              </div>
+              <div class="col">
+                <app-price [arrowFontSize]="'small'" 
+                            [fontSize]="'large'" 
+                            [selectedCoin]="coins[selectedCoinIndex]" 
+                            [chosenChart]="chosenChart" 
+                            ></app-price>
+              </div>
+            </div>
+      </div>
+      
+    
+    <div class="col-2 d-flex justify-content-end">
+      <div class="row">
+        <div class="col">
+          <button #tradeButtonToggle class="btn btn-sm btn-success" data-bs-toggle="modal" href="#tradeCoinModal" role="button">Trade</button>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+
+
+<div class="flex">
+    <div class="flex-item">
+      <div style="display: block;">
+      <canvas baseChart width="400" height="200"
+                  [data]="lineChartData"
+                  [options]="lineChartOptions"
+                  [type]="lineChartType"
+                  [labels]="lineChartData.labels"
+                  (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+    <!-- <div class="flex-item">
+      <table class="table table-responsive table-condensed">
+        <tr>
+          <th *ngFor="let label of lineChartData.labels">{{label}}</th>
+        </tr>
+        <tr *ngFor="let d of lineChartData.datasets; let i=index" [class]="'line-'+i">
+          <td *ngFor="let label of lineChartData.labels; let j=index">{{d && d.data[j]}}</td>
+        </tr>
+      </table>
+       <div class="button-row">
+        <button mat-button mat-raised-button color="primary" (click)="randomize()">Randomize</button>
+        <button mat-button mat-raised-button color="primary" (click)="pushOne()">Push</button>
+        <button mat-button mat-raised-button color="primary" (click)="changeColor()">Recolor</button>
+        <button mat-button mat-raised-button color="primary" (click)="hideOne()">Toggle Series B</button>
+        <button mat-button mat-raised-button color="primary" (click)="changeLabel()">Change Label</button>
+      </div> 
+    </div> -->
+
+    
+</div>
+
+
+
+
+
+

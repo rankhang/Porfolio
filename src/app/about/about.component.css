@@ -1,0 +1,9 @@
+.profilePic{
+    filter:opacity(40%);
+    
+}
+
+.profilePic:hover{
+    filter: none;
+}
+

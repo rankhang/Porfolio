@@ -1,0 +1,12 @@
+.aboutText{
+    white-space: normal;
+    width: 50%;
+    
+}
+
+.wrapper{
+    /* padding-left: 15%; */
+    position: absolute;
+    left: 20%;
+    top: 20%;
+}

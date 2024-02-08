@@ -1,0 +1,27 @@
+<!-- Modal -->
+<div class="modal fade" id="chatbot" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="min-width: 650px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Chat box</h5>
+          <button type="button" class="btn-close" (click)="onCloseClicked()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form #f="ngForm">
+            <div class="modal-body">
+
+              <div class="content" role="main" style="margin-top: 40%;">
+                <textarea readonly="readonly" name="conversation" [(ngModel)]="conversation" rows="10" cols="80"></textarea>
+                  <br/>
+                  <span><input type="text" size="60" name="message" [(ngModel)]="message" style="line-height:2.0em;" enterkeyhint=""/>
+                  <button (click)="startChat()" type="button" style="line-height: 2em;">Send</button></span>
+              </div>
+
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="onCloseClicked()" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>    
+      </div>
+    </div>
+  </div>

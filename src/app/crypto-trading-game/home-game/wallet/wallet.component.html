@@ -1,0 +1,204 @@
+ 
+ <app-loading-screen [isLoading]="isLoading"></app-loading-screen>
+ <!-- Modal -->
+  <div class="modal fade" id="walletModal" tabindex="-1" aria-labelledby="walletModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content storeModalBackgroud">
+        <div class="modal-header">
+          <h2 class="modal-title" id="walletModalLabel">My Wallets</h2>
+          <button type="button" #closeButton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseClicked()"></button>
+        </div>
+        <div class="modal-body">
+
+
+          <!--TEST-->
+          <div style="text-align: center;">
+            <mat-button-toggle-group [formControl]="walletControl" appearance="legacy" name="fontStyle" aria-label="Font Style">
+              <div class="row row-cols-auto d-flex justify-content-center">
+                <div class="col p-2" *ngFor="let wallet of ownedWallets; let i = index">
+                  <div class="card">
+                    <mat-button-toggle value = {{wallet.walletName}} (click)="onWalletClicked(i)">
+                      <div class="card-body">
+                        <img class="" height="80px" src="../../assets/game/wallets/{{wallet.walletName}}.png">
+                        <h5 class=" card-title">{{wallet.walletName}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"> {{wallet.isPurchased
+                                                                    ? wallet.currentCapacity ==0
+                                                                          ?"Empty"
+                                                                          : "Contain: " + wallet.currentCapacity + " coins"
+                                                                    : "Unavailable"  }}
+                          </h6>
+                        <p class="card-text"></p>
+                      </div>
+                    </mat-button-toggle>
+                  </div>
+                </div>
+              </div>
+            </mat-button-toggle-group>
+          </div>
+
+
+          <div *ngIf = "walletControl.value != null && chosenWallet.currentCapacity!=- 1" class="pt-4">
+            <div *ngIf="chosenWallet.isPurchased" class="alert alert-primary" role="alert">
+              <div>
+                Wallet Address: <span style="color: black;">{{chosenWallet.addressId}}</span> 
+              </div>
+            </div>
+
+            <div *ngIf="chosenWallet.isPurchased && chosenWallet.coinsContent.length == chosenWallet.maxCap" class="alert alert-danger" role="alert">
+              <div>
+                Wallet Full. This wallet only able to hold {{chosenWallet.maxCap}} coins. 
+              </div>
+            </div>
+            
+            <!--When wallet does not hold any coin-->
+            <div *ngIf="!chosenWallet.isPurchased ; else walletEmptyMessage" class="alert alert-warning" role="alert">
+              Wallet not owned! Please purchase this wallet at the store.
+            </div>
+            <ng-template #walletEmptyMessage>
+              <div *ngIf="chosenWallet.currentCapacity == 0; else currentCapacityThen" class="alert alert-warning" role="alert">
+                You do not have any coin in this wallet!
+              </div>
+            </ng-template>
+            
+            <ng-template #currentCapacityThen>
+              <!--When a coin in the wallet clicked-->
+              <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
+                <!--Content coins list-->
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      {{chosenWallet.walletName}}
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                    <div style=" padding: 1% 1% 0 0; text-align: right;">
+                      <button class="btn btn-sm btn-outline-success" (click)="onTransferButtonClicked()" >Transfer</button>
+                    </div>
+                    <div class="accordion-body">
+                        <p *ngIf="isTransferButtonClicked" ><span style="color: red">*</span>Please pick a coin</p>
+                        <div class="row row-cols-auto d-flex justify-content-center">
+                          <div *ngFor="let coin of chosenWallet.coinsContent; let i = index">
+                                <div class="card text-bg-light mb-3" style="
+                                width: 8rem">
+                                  <button [disabled]="isCoinInWalletButtonDisabled" class="btn" style="padding: 0;border: none;background: none;" (click)="onCoinInWalletClicked(i)" data-bs-toggle="collapse" data-bs-target="#collapseOne" >
+                                    <div class="card-header">
+                                      <img height="20px" src="../../assets/game/coins/{{coin.coinName.toLowerCase()}}.png">
+                                      <p style="font-size:x-small">{{coin.coinName}}</p>
+                                    </div>
+                                    <div class="card-body">
+                                      <p class="card-title " style="font-size: x-small; text-align: center;">{{coin.amount-math.floor(coin.amount) == 0 ?coin.amount: coin.amount.toFixed(8)}}</p>
+                                      <p class="fst-italic" style="font-size: xx-small;">{{coin.amount == 1? " coin" : " coins"}}</p>
+                                    </div>
+                                  </button>
+                                </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                  <!--Picked coin-->
+                  <div *ngIf="isCoinButtonInAWalletClicked">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"  data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                          Transfer
+                        </button>
+                      </h2>
+                      <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                              <!--Coin card-->
+                              <div class="row">
+                                <div class="d-flex col">
+                                  <div class="card text-bg-light mb-3" style="width: 8rem">
+                                    <div class="card-header">
+                                      <img height="20px" src="../../assets/game/coins/{{selectedOwnedCoinInTheWallet.coinName.toLowerCase()}}.png">
+                                      <p style="font-size:x-small">{{selectedOwnedCoinInTheWallet.coinName}}</p>
+                                    </div>
+                                    <div class="card-body">
+                                      <p class="card-title " style="font-size: x-small; text-align: center;">{{selectedOwnedCoinInTheWallet.amount-math.floor(selectedOwnedCoinInTheWallet.amount) == 0 ?selectedOwnedCoinInTheWallet.amount: selectedOwnedCoinInTheWallet.amount.toFixed(8)}}</p>
+                                      <p class="fst-italic" style="font-size: xx-small;">{{selectedOwnedCoinInTheWallet.amount == 1? " coin" : " coins"}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col">
+                                  
+                                  <div class="row">
+                                    <div class="row">
+                                      <label for="walletAddress"><p><span style="color: red;">*</span>Wallet Address &nbsp;</p></label> 
+                                    </div>
+                                    <div class="row">
+                                      <input id="walletAddress" name="walletAddress" type="text" [(ngModel)]="walletAddressInput">
+                                    </div>
+                                  </div>
+
+                                  <div class="row pt-4">
+                                    <div class="row">
+                                      <label for="quantity"><p><span style="color: red;">*</span>Quantity &nbsp;</p></label>
+                                    </div>
+                                    <div class="row">
+                                      <input id="quantity" name="quantity" type="number" [(ngModel)]="quantity">
+                                    </div>
+                                  </div>
+                                  <div><span style="color: red;">**</span>If you enter the wrong address, your might <em style="color: red;">lose</em> your funds.</div>
+                                </div>
+
+                                <div class="pt-2">
+                                  <div class="alert alert-danger" role="alert" *ngIf="quantity > selectedOwnedCoinInTheWallet.amount">
+                                    Not Enough Fund
+                                  </div>
+                                </div>
+
+                                <div class="pt-2">
+                                  <div class="alert alert-danger" role="alert" *ngIf="quantity <= 0 && quantity != null">
+                                    Invalid coin quantity
+                                  </div>
+                                </div>
+
+                                <div class="pt-2">
+                                  <div class="alert alert-danger" role="alert" *ngIf="walletAddressInput == '' && walletAddressInput != null">
+                                    Please insert wallet address
+                                  </div>
+                                </div>
+
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+              </div>
+            </ng-template>
+          </div>
+
+
+
+
+          <!--END TEST-->
+            
+            
+            
+        <div class="modal-footer">
+          <button type="button" 
+          data-bs-dismiss="modal"
+          (click)="onSendClicked()"
+                  class="btn btn-primary" 
+                  
+                  [disabled]="quantity==null 
+                                || walletAddressInput== null 
+                                || walletAddressInput == '' 
+                                || walletAddressInput == null 
+                                || quantity <= 0 
+                                || quantity > selectedOwnedCoinInTheWallet.amount"
+                  >Send</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCloseClicked()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+

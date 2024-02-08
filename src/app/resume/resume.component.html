@@ -1,0 +1,41 @@
+
+
+
+
+
+<div  class="container">
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card py-3 px-2">
+                <h3 class="text-center mb-3 mt-2">Game Mode</h3>
+        
+    
+                <form
+                
+                (ngSubmit)="onGameModeSubmit()"
+            
+              >
+              <!--Email Box-->
+                <div class="mb-3">
+                  <label for="emailInput" class="col-form-label">Level</label>
+                  <select #gameMode 
+                    class="form-select" 
+                    aria-label="Default select example"
+                    (change)="onSelected(gameMode.value)">
+                    
+                    <option selected value="1">Easy - Start with $100,000</option>
+                    <option value="2">Medium - Start with $10,000</option>
+                    <option value="3">Hard - Start with $1,000</option>
+                  </select>
+                </div>
+    
+                
+                
+                <div class="modal-footer">
+                  <button  type="submit" class="btn btn-primary" data-bs-dismiss="modal">Let's play</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>

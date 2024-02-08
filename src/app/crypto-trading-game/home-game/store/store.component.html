@@ -1,0 +1,46 @@
+  <!-- Modal -->
+  <div class="modal fade" id="storeModal" tabindex="-1" aria-labelledby="storeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content storeModalBackgroud">
+        <div class="modal-header">
+          <h2 class="modal-title" id="storeModalLabel">Wallet Shop</h2>
+          <button type="button" #closeButton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            
+        
+            <!--wallet list-->
+            <cdk-virtual-scroll-viewport itemSize="{{wallets.length}}" class="gameBody viewport" >
+              <div class="container">
+                <div *ngFor="let wallet of wallets; let i = index" >
+                  <div class="row border-bottom" style="background-color: rgb(167, 196, 207);">
+                    <div class="col-4 pt-2">
+                      <div class=" text-center">
+                        <img height="100px" src="../../assets/game/wallets/{{wallet.name}}.png">
+                          <div *ngFor="let ownedWallet of ownedWallets">
+                            <div *ngIf="ownedWallet.walletName == wallet.name">
+                              <button class="btn btn-primary" *ngIf="!ownedWallet.isPurchased; else notPurchased" (click)="onBuyButtonClicked(i)">Buy</button>
+                              <ng-template #notPurchased><button class="btn btn-success" disabled>Owned</button></ng-template>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-8 text-center">
+                      <h3 style="color: cadetblue; font-weight: bolder;">{{wallet.name}}</h3>
+                     
+                      <h5 class="walletInfo"  style="color: rgb(44, 175, 83);">{{wallet.price==0?"Free":wallet.price | currency: 'USD'}}</h5>
+                      <h6 class="walletInfo">Wallet type:  {{wallet.type}}</h6>
+                      <h6 class="walletInfo">Hold up to <em>{{wallet.capacity}}</em> coins</h6>
+                      <h6 class="walletInfo">Security level: <span class= "detailFont" [style.color]="wallet.securityTextColor">{{wallet.security}}</span></h6>
+                      <h6 class="walletInfo">Fragility level: <span class= "detailFont" [style.color]="wallet.fragilityTextColor">{{wallet.fragility}}</span></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </cdk-virtual-scroll-viewport>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

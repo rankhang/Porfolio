@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-porfoliov11-dev-233817-authRole",
+      "UnauthRoleArn": "arn:aws:iam::147225912326:role/amplify-porfoliov11-dev-233817-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::147225912326:role/amplify-porfoliov11-dev-233817-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-porfoliov11-dev-233817-deployment",
+      "UnauthRoleName": "amplify-porfoliov11-dev-233817-unauthRole",
+      "StackName": "amplify-porfoliov11-dev-233817",
+      "StackId": "arn:aws:cloudformation:us-east-1:147225912326:stack/amplify-porfoliov11-dev-233817/660c73b0-b0d8-11ed-878d-0e74c018307b",
+      "AmplifyAppId": "d2virns4ehw2fs"
+    },
+    "categories": {
+      "auth": {
+        "porfoliov11": {}
+      },
+      "interactions": {
+        "RKNhelpbot": {
+          "deploymentBucketName": "amplify-porfoliov11-dev-233817-deployment",
+          "s3Key": "amplify-builds/RKNhelpbot-4c6348573855715a5751-build.zip"
+        }
+      }
+    }
+  }
+}

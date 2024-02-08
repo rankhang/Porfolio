@@ -1,0 +1,86 @@
+<app-game-setting [userLastName]="userLastName" [userFirstName]="userFirstName" [storageRef]="storageRef" [profilePicUrl]="profilePicUrl" [db]="db" [auth]="auth" [user]="user" [firebaseApp]="firebaseApp"></app-game-setting>
+<nav class="navbar navbar-expand-md navbar-dark nav" aria-label="Dark offcanvas navbar" style="max-width: 4000px;">
+    <div class="container-fluid">
+  
+        <!--Logo-->
+      <div class="bg-image hover-overlay hover-zoom hover-shadow ripple">
+        <a class="navbar-brand" routerLink="">
+          <img src="../../assets/image/Free_Sample_By_Wix.jpeg" alt="" width="50" height="50">
+        </a>
+      </div>
+  
+      
+      <button class="navbar-toggler bg-image hover-overlay hover-shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
+        <span class="navbar-toggler-icon">
+              <i class="fa-solid fa-bars "></i>
+        </span>
+      </button>
+  
+      
+      <div class="offcanvas offcanvas-end text-white bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel"><img src="../../assets/image/Free_Sample_By_Wix.jpeg" alt="" width="50" height="50"></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/about" data-bs-dismiss="offcanvas">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/contact" data-bs-dismiss="offcanvas">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/game" data-bs-dismiss="offcanvas">Game</a>
+            </li>
+            
+
+            <li class="nav-item dropdown dropstart">
+              <div class="row">
+                <div class="col">
+                  <a class="nav-link dropdown-toggle" 
+                      data-bs-toggle="dropdown"  
+                      role="button" 
+                      aria-expanded="false">
+                      <img class="rounded-circle article-img" 
+                            height="40px" 
+                            width="40px" 
+                            src="{{user!.photoURL==null
+                                  ?'../../../../assets/profile-blank-pic/blank-profile-picture-g33c247d1f_1280.png'
+                                  :user!.photoURL}}" 
+                            id="img"> 
+                  </a>
+                  
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" disabled >Hi, <span style="color: rgb(24, 184, 224);">{{userFirstName}} {{userLastName}}</span></a></li>
+                    <li><hr class="dropdown-divider" style="background-color: rgb(45, 161, 123);"></li>
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#gameSetting" >Profile</a></li>
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#gameSetting">Setting</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <div class="ps-3">
+                      <li [ngStyle]="{color}">{{gameMode}}</li>
+                    </div>
+                    <li><hr class="dropdown-divider" style="background-color: rgb(45, 161, 123);"></li>
+                    <li><a class="dropdown-item" (click)="logout()" href="#">Log out</a></li>
+                  </ul>
+                </div>
+                <div class="col">
+                  
+                </div>
+              </div>
+              
+              
+              
+            </li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+
+  

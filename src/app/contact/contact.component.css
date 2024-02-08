@@ -1,0 +1,15 @@
+.wrapper{
+    position: absolute;
+    left: 15%;
+    top: 20%;
+}
+
+button{
+    border: 1px;
+    color: rgb(113, 159, 233);
+}
+
+button:hover{
+    color: rgb(223, 211, 56);
+}
+

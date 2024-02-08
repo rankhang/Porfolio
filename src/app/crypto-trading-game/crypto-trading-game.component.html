@@ -1,0 +1,97 @@
+<app-nav-bar></app-nav-bar>
+<app-loading-screen [isLoading]="isLoading"></app-loading-screen>
+
+
+<div style="text-align: right; padding: 1% 1% 0 0;">
+	<p>v.{{version}}</p>
+</div>
+<!-- <ng-template #logInform> -->
+	<div class="container">
+		<div class="row d-flex justify-content-center mt-5">
+			<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+				<div class="card py-3 px-2">
+					<p class="text-center mb-3 mt-2">Login</p>
+			
+	
+					<form 
+						class="myform"
+						[formGroup]="signInForm"
+						(ngSubmit)="onSignInSubmit(signInForm)"
+						[class.error]="!signInForm.valid && signInForm.touched">
+							<div class="form-group">
+								<input 
+									type="email" 
+									class="form-control" 
+									placeholder="Email"
+									[formControl]="$any(signInForm.controls['email'])">
+								
+								<div *ngIf="(signInForm.get('email')?.invalid && signInForm.get('email')?.touched) || signInForm.get('email')?.dirty">
+									<small class="text-danger" *ngIf="signInForm.get('email')?.hasError('required') ">Email address is required</small>
+									<small class="text-danger" *ngIf="signInForm.get('email')?.hasError('email')">Email address is invalid</small>
+								</div>  
+							</div>
+							<div class="form-group">
+								<input 
+									type="password" 
+									class="form-control" 
+									placeholder="Password"
+									[formControl]="$any(signInForm.controls['password'])">
+	
+								<div *ngIf="(signInForm.get('password')?.invalid && signInForm.get('password')?.touched) || signInForm.get('password')?.dirty">
+									<small class="text-danger" *ngIf="signInForm.get('password')?.hasError('required') ">Password is required</small>
+								</div>	
+							</div>
+							<div class="row">
+								<div class="bn" routerLink="sign-up">Create new account</div>
+							</div>
+							<div class="form-group mt-3">
+								<button [disabled]="!signInForm.valid" type="submit" class="btn btn-block btn-primary btn-lg"
+								data-bs-toggle= "modal" data-bs-target="#exampleModal"  
+								 ><small><i class="far fa-user pr-2"></i>Sign in</small></button>
+							</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- </ng-template> -->
+
+
+<div class="container pt-5 text-center">
+	<p class="alert alert-info">This game allows users to simulate the concepts of buying, selling and trading cryptocurrency.</p>
+	
+	<p class="alert alert-warning">Please create an account
+		and log in to start playing.</p>
+</div>
+
+
+<!--TOP SCORER TABLE-->
+<div class="container pt-5">
+	<p class="fs-1 fw-bolder font-monospace" style="color: azure; text-align: center;">TOP 5 PLAYERS</p>
+	<table class="table table-striped">
+		<thead>
+		<tr class="table-light">
+			<th scope="col">#</th>
+			<th scope="col">Name</th>
+			<th scope="col">Score</th>
+			<th scope="col">Game Mode</th>
+			<th scope="col">Joined Date</th>
+		</tr>
+		</thead>
+		<tbody >
+		<tr class="table-warning" *ngFor="let user of topScorer | slice:0:5; let i = index">
+				<th scope="row">{{i+1}}</th>
+				<td>{{user.name}}</td>
+				<td>{{user.score.toFixed(0)}}</td>
+				<td>{{user.gameMode}}</td>
+				<td>{{user.joinedDate.toDateString()}}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+	
+
+
+
+	
+
