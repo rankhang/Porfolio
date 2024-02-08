@@ -4,7 +4,7 @@
 	<div class="row d-flex justify-content-center mt-5">
 		<div class="col-12 col-md-8 col-lg-6 col-xl-5">
 			<div class="card py-3 px-2">
-				<p class="text-center mb-3 mt-2">Sign Up</p>
+				<p class="text-center mb-3 mt-2 titleTextColor">Sign Up</p>
 		
 
 				<form 
@@ -23,7 +23,7 @@
   					</div>
 
                     <div *ngIf="(signUpForm.get('fname')?.invalid && signUpForm.get('fname')?.touched) || signUpForm.get('fname')?.dirty">
-                    <small class="text-danger" *ngIf="signUpForm.get('fname')?.hasError('required') ">First name is required</small>
+                    <div class="text-warning" *ngIf="signUpForm.get('fname')?.hasError('required') ">First name is required</div>
                     </div>
 
                     <!--Last Name Box-->
@@ -36,7 +36,7 @@
   					</div>
 
                     <div *ngIf="(signUpForm.get('lname')?.invalid && signUpForm.get('lname')?.touched) || signUpForm.get('lname')?.dirty">
-                    <small class="text-danger" *ngIf="signUpForm.get('lname')?.hasError('required') ">Last name is required</small>
+                    <div class="text-warning" *ngIf="signUpForm.get('lname')?.hasError('required') ">Last name is required</div>
                     </div>  
                     
 
@@ -51,8 +51,8 @@
   					</div>
 
                       <div *ngIf="(signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) || signUpForm.get('email')?.dirty">
-                        <small class="text-danger" *ngIf="signUpForm.get('email')?.hasError('required') ">Email address is required</small>
-                        <small class="text-danger" *ngIf="signUpForm.get('email')?.hasError('email')">Email address is invalid</small>
+                        <div class="text-warning" *ngIf="signUpForm.get('email')?.hasError('required') ">Email address is required</div>
+                        <div class="text-warning" *ngIf="signUpForm.get('email')?.hasError('email')">Email address is invalid</div>
                       </div>    
                       
 
@@ -65,8 +65,8 @@
                             [formControl]="$any(signUpForm.controls['password'])">
   					</div>
                     <div *ngIf="(signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) || signUpForm.get('password')?.dirty">
-                        <small class="text-danger" *ngIf="signUpForm.get('password')?.hasError('required') ">Password is required</small>
-                        <small class="text-danger" *ngIf="signUpForm.get('password')?.hasError('minLength') ">Password must have at least 6 characters</small>
+                        <div class="text-warning" *ngIf="signUpForm.get('password')?.hasError('required') ">Password is required</div>
+                        <div class="text-warning" *ngIf="signUpForm.get('password')?.hasError('minLength') ">Password must have at least 6 characters</div>
                     </div>  
 
                      <!--Retype Password Box-->
@@ -79,8 +79,8 @@
   					</div>
 
                     <div *ngIf="(signUpForm.get('retype-password')?.invalid && signUpForm.get('retype-password')?.touched) || signUpForm.get('retype-password')?.dirty">
-                    <small class="text-danger" *ngIf="signUpForm.get('retype-password')?.hasError('required') ">Confirm password is required</small>
-                    <small class="text-danger" *ngIf="signUpForm.get('retype-password')?.hasError('NoPassswordMatch') ">Confirm password does not match</small>
+                    <div class="text-warning" *ngIf="signUpForm.get('retype-password')?.hasError('required') ">Confirm password is required</div>
+                    <div class="text-warning" *ngIf="signUpForm.get('retype-password')?.hasError('NoPassswordMatch') ">Confirm password does not match</div>
                    
                     
                     </div>  
@@ -91,9 +91,9 @@
   						<button 
                             [disabled]="!signUpForm.valid"
                             type="submit" 
-                            class="btn btn-block btn-primary btn-lg"
+                            class="btn btn-block btn-info btn-lg"
                             
-                            ><small><i class="far fa-user pr-2"></i>Register</small></button>
+                            ><small><i class="fa fa-user pr-2"></i>Register</small></button>
   					</div>
 				</form>
 			</div>

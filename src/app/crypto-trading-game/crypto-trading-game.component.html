@@ -10,7 +10,7 @@
 		<div class="row d-flex justify-content-center mt-5">
 			<div class="col-12 col-md-8 col-lg-6 col-xl-5">
 				<div class="card py-3 px-2">
-					<p class="text-center mb-3 mt-2">Login</p>
+					<p class="text-center mb-3 mt-2 titleTextColor">Login</p>
 			
 	
 					<form 
@@ -26,8 +26,8 @@
 									[formControl]="$any(signInForm.controls['email'])">
 								
 								<div *ngIf="(signInForm.get('email')?.invalid && signInForm.get('email')?.touched) || signInForm.get('email')?.dirty">
-									<small class="text-danger" *ngIf="signInForm.get('email')?.hasError('required') ">Email address is required</small>
-									<small class="text-danger" *ngIf="signInForm.get('email')?.hasError('email')">Email address is invalid</small>
+									<div class="text-warning" *ngIf="signInForm.get('email')?.hasError('required') ">Email address is required</div>
+									<div class="text-warning" *ngIf="signInForm.get('email')?.hasError('email')">Email address is invalid</div>
 								</div>  
 							</div>
 							<div class="form-group">
@@ -38,16 +38,16 @@
 									[formControl]="$any(signInForm.controls['password'])">
 	
 								<div *ngIf="(signInForm.get('password')?.invalid && signInForm.get('password')?.touched) || signInForm.get('password')?.dirty">
-									<small class="text-danger" *ngIf="signInForm.get('password')?.hasError('required') ">Password is required</small>
+									<div class="text-warning" *ngIf="signInForm.get('password')?.hasError('required') ">Password is required</div>
 								</div>	
 							</div>
 							<div class="row">
 								<div class="bn" routerLink="sign-up">Create new account</div>
 							</div>
 							<div class="form-group mt-3">
-								<button [disabled]="!signInForm.valid" type="submit" class="btn btn-block btn-primary btn-lg"
+								<button [disabled]="!signInForm.valid" type="submit" class="btn btn-block btn-info btn-lg"
 								data-bs-toggle= "modal" data-bs-target="#exampleModal"  
-								 ><small><i class="far fa-user pr-2"></i>Sign in</small></button>
+								 ><small><i class="fa fa-user pr-2"></i>Sign in</small></button>
 							</div>
 					</form>
 				</div>
@@ -58,10 +58,48 @@
 
 
 <div class="container pt-5 text-center">
-	<p class="alert alert-info">This game allows users to simulate the concepts of buying, selling and trading cryptocurrency.</p>
 	
-	<p class="alert alert-warning">Please create an account
-		and log in to start playing.</p>
+		<p class="alert alert-info">This game allows users to simulate the concepts of buying, 
+			selling and trading cryptocurrency 
+			<a class="readMore" data-bs-toggle="collapse" href="#gameDecriptionCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+				Read more about...
+			</a>
+		</p>
+		<div class="collapse  pb-3" id="gameDecriptionCollapse">
+			<div class="card card-body">
+				<p class="alert alert-info">Welcome to our cryptocurrency trading 
+					simulation game! Immerse yourself in 
+					the thrilling world of digital currency 
+					as you navigate through the complexities
+					 of buying, selling, and trading. 
+					 In this virtual environment, users have 
+					 the opportunity to explore the dynamics 
+					 of cryptocurrency markets without the risk of real financial loss.
+				</p>
+
+				<p class="alert alert-info">
+					Experience the excitement of making 
+					strategic decisions as you monitor market trends, 
+					analyze price movements, and execute trades to maximize profits. 
+					Whether you're a seasoned trader or new to the crypto scene, 
+					our game offers a realistic simulation that challenges 
+					and educates players of all levels.
+				</p>
+				
+				<p class="alert alert-info">
+					With a user-friendly interface and real-time data, 
+					you can stay informed and engaged as you compete 
+					with friends or test your skills against the market. 
+					Are you ready to embark on your crypto trading adventure? 
+					Join us and unleash your trading prowess in this dynamic and immersive simulation game!
+				</p>
+				
+			</div>
+		  </div>
+
+		<p class="alert alert-warning">Please create an account and proceed with logging in to get started.</p>
+
+		
 </div>
 
 

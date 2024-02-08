@@ -3,13 +3,14 @@ body{
 }
 .card{
 	border: none;
-	border-top: 5px solid  rgba(40, 68, 224, 0.616);
-	background: #3a5f9e;
-	color: #a0a3c0;
+	border-top: 5px solid  rgba(129, 141, 211, 0.616);
+	background: #7385a3;
+	color: #c5c5ca;
 }
 input{
 	color: rgb(209, 199, 199);
 }
+
 
 p{
 	font-weight: 600;
@@ -65,7 +66,7 @@ p{
 	border: 1px solid #2e2997;
 	border-radius: 3px;
 	background: #bdc7cc;
-	margin-bottom: 20px;
+
 	letter-spacing: 1px;
 	color: rgb(30, 93, 144);
 }
@@ -96,8 +97,13 @@ border-radius: 50px;
 	border: none;
 }
 small{
-	color: #F2CEFF;
+	color: #1c1946;
 }
+
+.readMore{
+	font-size: small;
+}
+
 .far.fa-user{
 	font-size: 13px;
 }

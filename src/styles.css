@@ -16,6 +16,10 @@ p{
     background-color:rgb(43, 141, 180);
 }
 
+.titleTextColor{
+    color: bisque;
+}
+
 .fontTitle{
     font-weight: 700;
     font-size: large;
