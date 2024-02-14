@@ -1,6 +1,6 @@
-body{
+/* body{
 	background-color: #19123B;
-}
+} */
 .card{
 	border: none;
 	border-top: 5px solid  rgba(129, 141, 211, 0.616);
@@ -131,3 +131,5 @@ small{
 		width: 50%;
 	}
 }
+
+

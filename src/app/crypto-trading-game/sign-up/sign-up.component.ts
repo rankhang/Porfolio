@@ -70,10 +70,16 @@ export class SignUpComponent implements OnInit {
       const db = getFirestore(initializeFirebase.initialize());
       this.writeNewUserToDB(this.aUser,userCredential, db);
        this.writeInitialCoinDataToDB(db, userCredential);
-      //  alert("Account Created Successfully")
        this.route.navigate(['game/game-mode'])
     }).catch((error) => {
-      this.toast.error({detail:"Create Account Failed", summary:"Please try later.", duration:2000})
+      if(error == "FirebaseError: Firebase: Error (auth/email-already-in-use)."){
+        this.toast.error({detail:"Email already in use", summary:"Please try later.", duration:10000})
+      }else{
+        this.toast.error({detail:"Create Account Failed, \n" + error, summary:"Please try later.", duration:10000})
+      }
+      
+      
+      this.isLoading = false;
     })
   }
 
@@ -103,7 +109,8 @@ export class SignUpComponent implements OnInit {
         })
 
       }catch(e){
-        this.toast.error({detail:"Error", summary:"Write to data failed.", duration:2000})
+        this.toast.error({detail:"Error", summary:"Write to data failed. \n" + e , duration:2000})
+        this.isLoading = false;
       }
   }
 
