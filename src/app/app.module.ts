@@ -81,6 +81,8 @@ import { TooltipModule } from 'ng2-tooltip-directive';
 import { GameSettingComponent } from './crypto-trading-game/home-game/game-setting/game-setting.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { MulticolorAnimationBackgroundComponent } from './multicolor-animation-background/multicolor-animation-background.component';
+import { AppsListComponent } from './apps-list/apps-list.component';
+
 
 
 
@@ -160,7 +162,8 @@ Amplify.configure({
     AddFundModalComponent,
     GameSettingComponent,
     ChatbotComponent,
-    MulticolorAnimationBackgroundComponent
+    MulticolorAnimationBackgroundComponent,
+    AppsListComponent
   ],
   imports: [
     BrowserModule,

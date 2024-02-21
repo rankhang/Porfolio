@@ -13,10 +13,12 @@ import { FriendsListComponent } from './friends-list/friends-list.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResumeComponent } from './resume/resume.component';
+import { AppsListComponent } from './apps-list/apps-list.component';
 
 
 const routes: Routes = [
-  {path: '', component: HomepageComponent},
+  {path: '', component: AboutComponent},
+  {path: 'home', component: HomepageComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'resume', component: ResumeComponent},
@@ -25,7 +27,7 @@ const routes: Routes = [
   {path: 'game/sign-up', component: SignUpComponent},
   {path: 'game/home',canActivate:[AuthGuard], component: HomeGameComponent}, //, 
   {path: 'game/game-mode', component: GameModeComponent},
-  
+  {path: 'appsList', component: AppsListComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
