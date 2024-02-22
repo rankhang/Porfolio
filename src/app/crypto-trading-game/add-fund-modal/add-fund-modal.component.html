@@ -98,12 +98,13 @@
                                 <!---->
 
                                 <div class="d-grid gap-2 pt-5 " >
-                                    <button [disabled]="bankTransferAmount <= 0 
-                                                        || bankTransferAmount== 0 
-                                                    
-                                                        || bankTransferAmount== undefined 
-                                                        || bankTransferAmount== null
-                                                        || bankTransferAmount > accountBalance"
+                                    <button [disabled]="
+                                         (  bankTransferAmount <= 0     
+                                        || bankTransferAmount == null || bankTransferAmount == undefined)
+                                        ||(fromAccountString=='Personal Account' && toAccountString =='KN Exchange'
+                                            ?bankTransferAmount > accountBalance
+                                            :ownedWallets[0]==null?'':ownedWallets[0].balance < bankTransferAmount)
+                                        "
                                                         (click)="onTransferClicked()" 
                                                         class="btn btn-primary" 
                                                         type="button">Transfer
@@ -123,6 +124,8 @@
                                     class="alert alert-danger mt-2" role="alert">
                                     <small>Not Enough Balance </small>
                                 </div>
+
+                      
 
                         </div>
                       </div>

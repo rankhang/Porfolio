@@ -105,6 +105,8 @@ export class AddFundModalComponent implements OnInit {
   }
 
   onContinueClicked(){
+      console.log("account balance: " + this.accountBalance);
+      console.log("owned wallet: " + this.ownedWallets[0].balance);
       this.isContinueButtonClicked = true;
   }
 
