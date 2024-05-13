@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Interactions } from 'aws-amplify';
+// import { Interactions } from 'aws-amplify';
 @Component({
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
@@ -24,17 +24,17 @@ export class ChatbotComponent implements OnInit {
   }
 
   async startChat() {
-    // Provide a bot name and user input
-    this.conversation = this.conversation + "\nYou: " + this.message;
-    var response = await Interactions.send("RetailOrderManagement", this.message.toString());
-    //Log chatbot response
-    console.log(response);
-    this.message = '';
-    if(response && response['message']){
-      this.conversation = this.conversation + "\nBot: " + response['message']
-    }
-    if(response && !response['message']){
-      this.conversation = this.conversation + "\nBot: " + "Your Hotel Room Booking is complete."
-    }
+    // // Provide a bot name and user input
+    // this.conversation = this.conversation + "\nYou: " + this.message;
+    // var response = await Interactions.send("RetailOrderManagement", this.message.toString());
+    // //Log chatbot response
+    // console.log(response);
+    // this.message = '';
+    // if(response && response['message']){
+    //   this.conversation = this.conversation + "\nBot: " + response['message']
+    // }
+    // if(response && !response['message']){
+    //   this.conversation = this.conversation + "\nBot: " + "Your Hotel Room Booking is complete."
+    // }
   }
 }

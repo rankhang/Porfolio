@@ -18,8 +18,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import  {MatCurrencyFormatModule} from 'mat-currency-format';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 //For AWS Amplify
-import { AWSLexV2Provider } from '@aws-amplify/interactions';
-import { Amplify, API, Interactions } from 'aws-amplify';
+// import { AWSLexV2Provider } from '@aws-amplify/interactions';
+// import { Amplify, API, Interactions } from 'aws-amplify';
 
 
 //For Firebase
@@ -86,22 +86,22 @@ import { AppsListComponent } from './apps-list/apps-list.component';
 
 
 
-Amplify.configure({
-    Auth: {
-      identityPoolId: 'us-east-1:1802f116-0fe5-4f11-a25a-aeadd031641f',
-      region: 'us-east-1'
-    },
-    Interactions: {
-      bots: {
-        "ScheduleAppointment_dev": {
-          "name": "ScheduleAppointment_dev",
-          "alias": "$LATEST",
-          "region": "us-east-1",
-        },
+// Amplify.configure({
+//     Auth: {
+//       identityPoolId: 'us-east-1:1802f116-0fe5-4f11-a25a-aeadd031641f',
+//       region: 'us-east-1'
+//     },
+//     Interactions: {
+//       bots: {
+//         "ScheduleAppointment_dev": {
+//           "name": "ScheduleAppointment_dev",
+//           "alias": "$LATEST",
+//           "region": "us-east-1",
+//         },
         
-      }
-    }
-  });
+//       }
+//     }
+//   });
 
 
 //   Amplify.addPluggable(new AWSLexV2Provider());

@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges, Input, inject, Inject } from '@angular/core';
-import { Interactions } from 'aws-amplify';
+// import { Interactions } from 'aws-amplify';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 
