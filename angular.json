@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": ["cookie","isomorphic-unfetch","@aws-crypto/crc32","fast-xml-parser","@aws-crypto/sha256-browser","lodash/noop","lodash/flatten","@aws-crypto/sha256-js", "buffer","uuid","camelcase-keys","ulid", "lodash/get","lodash/isEmpty","lodash/isEqual", "url","js-cookie"],
             "outputPath": "dist/portfolio",
             "index": "src/index.html",
             "main": "src/main.ts",
