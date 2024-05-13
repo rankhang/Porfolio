@@ -42,7 +42,7 @@ export class GameModeComponent implements OnInit {
       });
       this.isLoading = false;
       this.toast.success({detail:"Create Account Succeeded",summary:"Please log in to start.", duration:3000})
-      this.router.navigate(['/game/home']);
+      this.router.navigate(['appsList/cryptoCurrencyGame/home']);
     }catch(e){
       this.isLoading = false;
       this.toast.error({detail:"Error",summary:"Please try again", duration:2000})

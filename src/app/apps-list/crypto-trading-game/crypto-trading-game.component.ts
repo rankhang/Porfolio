@@ -5,10 +5,10 @@ import { Route, Router } from '@angular/router';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth.service';
-import { ErrorMessageModalComponent } from '../error-message-modal/error-message-modal.component';
-import { initializeFirebase } from '../firebase/initialize-firebase';
-import { TopScorer } from '../models/topScorer.model';
+import { AuthService } from '../../auth.service';
+import { ErrorMessageModalComponent } from '../../error-message-modal/error-message-modal.component';
+import { initializeFirebase } from '../../firebase/initialize-firebase';
+import { TopScorer } from '../../models/topScorer.model';
 
 
 
@@ -35,9 +35,10 @@ export class CryptoTradingGameComponent implements OnInit {
   constructor(private authService: AuthService, fb: FormBuilder, route: Router, private dialogRef: MatDialog) {
     this.getTopScorerData();
     
+    
     if(this.user?.email != null || this.user?.email != undefined || this.isLoggedIn){
       this.isLoggedIn = true;
-      route.navigate(['game/home']);
+      route.navigate(['appsList/cryptoCurrencyGame/home']);
     }
     
     
@@ -62,7 +63,7 @@ export class CryptoTradingGameComponent implements OnInit {
         
         
         if(this.errorMessage == "Logged In Success"){
-          this.route.navigate(['game/home'])
+          this.route.navigate(['appsList/cryptoCurrencyGame/home'])
         }else{
           if(this.errorMessage =="Firebase: Error (auth/wrong-password)."){
             this.errorMessage = "You've entered wrong email or password"

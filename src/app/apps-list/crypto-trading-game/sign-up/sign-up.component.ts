@@ -70,7 +70,7 @@ export class SignUpComponent implements OnInit {
       const db = getFirestore(initializeFirebase.initialize());
       this.writeNewUserToDB(this.aUser,userCredential, db);
        this.writeInitialCoinDataToDB(db, userCredential);
-       this.route.navigate(['game/game-mode'])
+       this.route.navigate(['appsList/cryptoCurrencyGame/game-mode'])
     }).catch((error) => {
       if(error == "FirebaseError: Firebase: Error (auth/email-already-in-use)."){
         this.toast.error({detail:"Email already in use", summary:"Please try later.", duration:10000})

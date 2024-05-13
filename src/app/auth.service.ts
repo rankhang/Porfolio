@@ -25,6 +25,8 @@ export class AuthService{
         await signInWithEmailAndPassword(auth, form.value.email, form.value.password)
         .then((userCredential) => {
           // Signed in 
+          console.log("in auth");
+          
           const user = userCredential.user;
           // ...
           AuthService.isLoggedIn = true;
@@ -48,9 +50,9 @@ export class AuthService{
         // Sign-out successful.
         AuthService.isLoggedIn = false;
         console.log("Signed out");
-        this.route?.navigate(['game'])
+        this.route?.navigate(['appsList/cryptoCurrencyGame'])
     }).catch((error) => {
-        // An error happened.
+        console.log("Sign Out error : "+ error);
     });
     }
 }

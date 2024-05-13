@@ -135,7 +135,7 @@ export class HomeGameComponent implements OnInit {
       this.getExchangeWalletTotalAndOriginalInvestment();
     });
 
-
+    console.log("here in home");
     
     try{
       this.firebaseApp = getApp();

@@ -4,10 +4,10 @@ import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './auth-guard.service';
 import { ContactComponent } from './contact/contact.component';
-import { CryptoTradingGameComponent } from './crypto-trading-game/crypto-trading-game.component';
-import { GameModeComponent } from './crypto-trading-game/game-mode/game-mode.component';
-import { HomeGameComponent } from './crypto-trading-game/home-game/home-game.component';
-import { SignUpComponent } from './crypto-trading-game/sign-up/sign-up.component';
+import { CryptoTradingGameComponent } from './apps-list/crypto-trading-game/crypto-trading-game.component';
+import { GameModeComponent } from './apps-list/crypto-trading-game/game-mode/game-mode.component';
+import { HomeGameComponent } from './apps-list/crypto-trading-game/home-game/home-game.component';
+import { SignUpComponent } from './apps-list/crypto-trading-game/sign-up/sign-up.component';
 import { FriendsListComponent } from './friends-list/friends-list.component';
 
 import { HomepageComponent } from './homepage/homepage.component';
@@ -23,11 +23,12 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'resume', component: ResumeComponent},
   {path: 'friends-list', component: FriendsListComponent},
-  {path: 'game', component: CryptoTradingGameComponent},
-  {path: 'game/sign-up', component: SignUpComponent},
-  {path: 'game/home',canActivate:[AuthGuard], component: HomeGameComponent}, //, 
-  {path: 'game/game-mode', component: GameModeComponent},
   {path: 'appsList', component: AppsListComponent},
+  {path: 'appsList/cryptoCurrencyGame', component: CryptoTradingGameComponent},
+  {path: 'appsList/cryptoCurrencyGame/sign-up', component: SignUpComponent},
+  {path: 'appsList/cryptoCurrencyGame/home',canActivate:[AuthGuard], component: HomeGameComponent}, //, 
+  {path: 'appsList/cryptoCurrencyGame/game-mode', component: GameModeComponent},
+  
   {path: '**', component: PageNotFoundComponent}
 ];
 

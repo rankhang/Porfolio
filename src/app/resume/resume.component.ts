@@ -5,7 +5,7 @@ import { Coins } from '../models/coins.model';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { Month } from '../models/month.model';
 import { GenerateRandomNum } from '../generate-random-number.service';
-import { CoinGraphComponent } from '../crypto-trading-game/coin-graph/coin-graph.component';
+import { CoinGraphComponent } from '../apps-list/crypto-trading-game/coin-graph/coin-graph.component';
 import { limitToFirst } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs, getFirestore, updateDoc } from 'firebase/firestore';
