@@ -83,6 +83,8 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
 import { MulticolorAnimationBackgroundComponent } from './multicolor-animation-background/multicolor-animation-background.component';
 import { AppsListComponent } from './apps-list/apps-list.component';
 
+import { KatbookComponent } from './apps-list/katbook/katbook.component';
+
 
 
 
@@ -163,7 +165,8 @@ import { AppsListComponent } from './apps-list/apps-list.component';
     GameSettingComponent,
     ChatbotComponent,
     MulticolorAnimationBackgroundComponent,
-    AppsListComponent
+    AppsListComponent,
+    KatbookComponent
   ],
   imports: [
     BrowserModule,

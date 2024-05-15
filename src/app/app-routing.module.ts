@@ -14,6 +14,9 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResumeComponent } from './resume/resume.component';
 import { AppsListComponent } from './apps-list/apps-list.component';
+import { KatbookComponent } from './apps-list/katbook/katbook.component';
+import { KatBookHomepageComponent } from './apps-list/katbook/homepage/homepage.component';
+
 
 
 const routes: Routes = [
@@ -28,6 +31,8 @@ const routes: Routes = [
   {path: 'appsList/cryptoCurrencyGame/sign-up', component: SignUpComponent},
   {path: 'appsList/cryptoCurrencyGame/home',canActivate:[AuthGuard], component: HomeGameComponent}, //, 
   {path: 'appsList/cryptoCurrencyGame/game-mode', component: GameModeComponent},
+  {path: 'appsList/katbook/sign-in', component: KatbookComponent},
+  {path: 'appsList/katbook/home', component: KatBookHomepageComponent},
   
   {path: '**', component: PageNotFoundComponent}
 ];

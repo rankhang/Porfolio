@@ -9,10 +9,11 @@ export class initializeFirebase{
     
     
     
-
+    //FOR CryptoCurrency game
     static initialize(): FirebaseApp{
         const app = initializeApp(environment.firebase);
         return app;
     }
+
     
 }

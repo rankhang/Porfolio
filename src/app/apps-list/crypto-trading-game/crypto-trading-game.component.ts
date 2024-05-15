@@ -9,6 +9,8 @@ import { AuthService } from '../../auth.service';
 import { ErrorMessageModalComponent } from '../../error-message-modal/error-message-modal.component';
 import { initializeFirebase } from '../../firebase/initialize-firebase';
 import { TopScorer } from '../../models/topScorer.model';
+import { SignInService } from 'src/app/firebase/SignInService';
+import { Name } from 'src/app/name';
 
 
 
@@ -40,10 +42,6 @@ export class CryptoTradingGameComponent implements OnInit {
       this.isLoggedIn = true;
       route.navigate(['appsList/cryptoCurrencyGame/home']);
     }
-    
-    
-    
-
     this.route = route;
 
     this.signInForm = fb.group({
@@ -55,44 +53,8 @@ export class CryptoTradingGameComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async onSignInSubmit(form: FormGroup){
-    if(this.signInForm.valid){
-      
-        this.errorMessage = await this.authService.signIn(form);
-        
-        
-        
-        if(this.errorMessage == "Logged In Success"){
-          this.route.navigate(['appsList/cryptoCurrencyGame/home'])
-        }else{
-          if(this.errorMessage =="Firebase: Error (auth/wrong-password)."){
-            this.errorMessage = "You've entered wrong email or password"
-            this.solutionText = "Please try again";
-          }else if(this.errorMessage =="Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."){
-            this.errorMessage = "Access to this account has been temporarily disabled due to many failed login attempts"
-            this.solutionText = "Please try again later";
-          }else if(this.errorMessage =="Firebase: Error (auth/user-not-found)."){
-            this.errorMessage = "Not found profile"
-            this.solutionText = "Please create an account before playing";
-          }
-          this.dialogRef.open(ErrorMessageModalComponent,{
-            data: {
-              errorCode: "Login Failed",
-              errorMessage: this.errorMessage,
-              errorSolution: this.solutionText
-            }
-          });
-          
-        }
-          
-          
-        
-      
-     
-     
-      
-    }
-    
+   onSignInSubmit(form: FormGroup){
+     SignInService.signIn(form ,this.signInForm, this.authService, this.dialogRef, this.route, Name.CRYPTOCURRENCYGAME);
   }
 
   async getTopScorerData(){

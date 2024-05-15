@@ -1,0 +1,185 @@
+<div class="wrap">
+    <div class="theme ">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <div class="login-wrap ">
+                        <div class="login-html">
+                            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1"
+                                class="tab">Sign In</label>
+                            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2"
+                                class="tab">Sign Up</label>
+                            <div class="login-form">
+                                <!--Sign in form-->
+                                <form class="myform" [formGroup]="signInForm" (ngSubmit)="onSignInSubmit(signInForm)"
+                                [class.error]="!signInForm.valid && signInForm.touched">
+                                    <div class="sign-in-htm">
+                                        <div class="group form-group">
+                                            <div
+                                                *ngIf="(signInForm.get('email')?.invalid && signInForm.get('email')?.touched) || signInForm.get('email')?.dirty">
+                                                <div class="text-warning"
+                                                    *ngIf="signInForm.get('email')?.hasError('required') ">Email
+                                                    address is required</div>
+                                                <div class="text-warning"
+                                                    *ngIf="signInForm.get('email')?.hasError('email')">Email address
+                                                    is invalid</div>
+                                            </div>
+                                            <input type="email" class="form-control input" placeholder="Email"
+                                                [formControl]="$any(signInForm.controls['email'])">
+
+
+                                        </div>
+                                        <div class="group form-group">
+                                            <div
+                                                *ngIf="(signInForm.get('password')?.invalid && signInForm.get('password')?.touched) || signInForm.get('password')?.dirty">
+                                                <div class="text-warning"
+                                                    *ngIf="signInForm.get('password')?.hasError('required') ">Password
+                                                    is required</div>
+                                            </div>
+                                            <input type="password" class="form-control input" placeholder="Password"
+                                                [formControl]="$any(signInForm.controls['password'])">
+
+
+                                        </div>
+                                        <div class="form-group mt-3 group">
+                                            <button [disabled]="!signInForm.valid" type="submit" class="button"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal"><small><i
+                                                        class="fa fa-user pr-2"></i>Sign in</small></button>
+                                        </div>
+                                        <div class="hr"></div>
+                                        <div class="foot-lnk">
+                                            <a href="#forgot">Forgot Password?</a>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                                <!--Sign Up Form-->
+                                <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit(signUpForm)"
+                                    [class.error]="!signUpForm.valid && signUpForm.touched">
+                                    <div class="sign-up-htm">
+
+                                        <!--First name box-->
+                                        <div
+                                            *ngIf="(signUpForm.get('fname')?.invalid && signUpForm.get('fname')?.touched) || signUpForm.get('fname')?.dirty">
+                                            <div class="text-warning"
+                                                *ngIf="signUpForm.get('fname')?.hasError('required') ">First name is
+                                                required
+                                            </div>
+                                        </div>
+                                        <div class="form-group group">
+                                            <input type="text" class="form-control input" placeholder="First name"
+                                                [formControl]="$any(signUpForm.controls['fname'])">
+                                        </div>
+
+
+                                        <!--Last name box-->
+                                        <div
+                                            *ngIf="(signUpForm.get('lname')?.invalid && signUpForm.get('lname')?.touched) || signUpForm.get('lname')?.dirty">
+                                            <div class="text-warning"
+                                                *ngIf="signUpForm.get('lname')?.hasError('required') ">Last name is
+                                                required</div>
+                                        </div>
+                                        <div class="form-group group">
+                                            <input type="text" class="form-control input" placeholder="Last name"
+                                                [formControl]="$any(signUpForm.controls['lname'])">
+                                        </div>
+
+
+
+                                        <!--Email Box-->
+                                        <div
+                                            *ngIf="(signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) || signUpForm.get('email')?.dirty">
+                                            <div class="text-warning"
+                                                *ngIf="signUpForm.get('email')?.hasError('required') ">Email address is
+                                                required
+                                            </div>
+                                            <div class="text-warning"
+                                                *ngIf="signUpForm.get('email')?.hasError('email')">Email address is
+                                                invalid</div>
+                                        </div>
+                                        <div class="form-group group">
+                                            <input
+                                                [class.is-invalid]="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched"
+                                                type="email" class="form-control input" placeholder="Email"
+                                                [formControl]="$any(signUpForm.controls['email'])">
+                                        </div>
+
+
+
+
+                                        <!--Password Box-->
+                                        <div
+                                            *ngIf="(signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) || signUpForm.get('password')?.dirty">
+                                            <div class="text-warning"
+                                                *ngIf="signUpForm.get('password')?.hasError('required') ">Password is
+                                                required
+                                            </div>
+                                            <div class="text-warning"
+                                                *ngIf="signUpForm.get('password')?.hasError('minLength') ">Password must
+                                                have at
+                                                least 6 characters</div>
+                                        </div>
+                                        <div class="form-group group">
+                                            <input type="password" class="form-control input" placeholder="Password"
+                                                [formControl]="$any(signUpForm.controls['password'])">
+                                        </div>
+
+
+                                        <!--Retype Password Box-->
+                                        <div
+                                            *ngIf="(signUpForm.get('retype-password')?.invalid && signUpForm.get('retype-password')?.touched) || signUpForm.get('retype-password')?.dirty">
+                                            <div class="text-warning"
+                                                *ngIf="signUpForm.get('retype-password')?.hasError('required') ">Confirm
+                                                password
+                                                is required</div>
+                                            <div class="text-warning"
+                                                *ngIf="signUpForm.get('retype-password')?.hasError('NoPassswordMatch') ">
+                                                Confirm
+                                                password does not match</div>
+
+
+                                        </div>
+                                        <div class="form-group group">
+                                            <input type="password" class="form-control input"
+                                                placeholder="Re-type password"
+                                                [formControl]="$any(signUpForm.controls['retype-password'])">
+                                        </div>
+
+
+
+                                        <!--Submit Box-->
+                                        <div class="form-group mt-3 group">
+                                            <button [disabled]="!signUpForm.valid" type="submit"
+                                                class="button"><small><i
+                                                        class="fa fa-user pr-2"></i>Register</small></button>
+                                        </div>
+
+
+
+
+                                        <div class="hr"></div>
+                                        <div class="foot-lnk">
+                                            <label for="tab-1">Already Member?</label>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <h5 class="fs-1 font-monospace fw-bolder pt-5 text-primary text-opacity-50">katbook</h5>
+                    <h1 class="fs-4 fw-medium text-body-secondary text-secondary">Join the feline community near you on
+                        Katbook and bond with fellow cat lovers.</h1>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
