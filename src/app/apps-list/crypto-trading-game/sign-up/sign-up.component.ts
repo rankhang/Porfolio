@@ -9,7 +9,7 @@ import { initializeFirebase } from 'src/app/firebase/initialize-firebase';
 import { GenerateRandomNum } from 'src/app/generate-random-number.service';
 import { Coins } from 'src/app/models/coins.model';
 import { OwnedWallet } from 'src/app/models/ownedWallet.model';
-import { User } from 'src/app/models/users.model';
+import { MainUser } from '../../katbook/models/MainUser';
 import { Name } from 'src/app/name';
 import { WalletService } from 'src/app/wallet.service';
 import { PasswordValidator } from './PasswordValidator';
@@ -23,7 +23,7 @@ import { CreateAccountService } from 'src/app/firebase/createAccountService';
 })
 export class SignUpComponent implements OnInit {
   signUpForm : FormGroup;
-  aUser!: User;
+  aUser!: MainUser;
   errorCode: string = "";
   errorMessage: string = "";
   route: Router;
@@ -57,7 +57,7 @@ export class SignUpComponent implements OnInit {
       const auth = getAuth();
       //create an user object
       
-      this.aUser = new User(form.value.email,form.value.fname,form.value.lname, new Date());
+      this.aUser = new MainUser(form.value.email,form.value.fname,form.value.lname, new Date());
       await CreateAccountService.createAccount(auth,form.value.email, form.value.password, this.toast, this.aUser, this.route, this.isLoading, this.appName);
     }
     

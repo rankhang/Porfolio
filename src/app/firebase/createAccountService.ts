@@ -8,14 +8,14 @@ import { initializeFirebase } from 'src/app/firebase/initialize-firebase';
 import { GenerateRandomNum } from 'src/app/generate-random-number.service';
 import { Coins } from 'src/app/models/coins.model';
 import { OwnedWallet } from 'src/app/models/ownedWallet.model';
-import { User } from 'src/app/models/users.model';
+import { MainUser } from '../apps-list/katbook/models/MainUser';
 import { Name } from 'src/app/name';
 import { WalletService } from 'src/app/wallet.service';
 import { NgToastService } from 'ng-angular-popup';
 import { Post } from '../apps-list/katbook/models/Post';
 
 export class CreateAccountService {
-    static async createAccount(auth: Auth, email: string, password: string, toast: NgToastService, aUser: User, route: Router, isLoading: boolean, appNameString: String) {
+    static async createAccount(auth: Auth, email: string, password: string, toast: NgToastService, aUser: MainUser, route: Router, isLoading: boolean, appNameString: String) {
         await createUserWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
                 let user = userCredential.user;
@@ -57,7 +57,7 @@ export class CreateAccountService {
     // }
 
 
-    static async writeNewUserToDB(newUser: User, userCredential: UserCredential, db: Firestore, toast: NgToastService, isLoading: boolean) {
+    static async writeNewUserToDB(newUser: MainUser, userCredential: UserCredential, db: Firestore, toast: NgToastService, isLoading: boolean) {
         try {
             let user = userCredential.user;
             const docRef = await setDoc(doc(db, "User", user.uid), {

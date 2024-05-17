@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PasswordValidator } from '../crypto-trading-game/sign-up/PasswordValidator';
 import { Auth, createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { User } from 'src/app/models/users.model';
+import { MainUser } from './models/MainUser';
 import { NgToastService } from 'ng-angular-popup';
 import { CreateAccountService } from 'src/app/firebase/createAccountService';
 import { Name } from 'src/app/name';
@@ -21,7 +21,7 @@ export class KatbookComponent implements OnInit {
   signInForm: FormGroup;
   route: Router;
   isLoading = false;
-  aUser! : User;
+  aUser! : MainUser;
   readonly appName = Name.KATBOOK;
 
   constructor(private authService: AuthService, fb: FormBuilder, route: Router, private toast: NgToastService, private dialogRef: MatDialog) {
@@ -53,7 +53,7 @@ export class KatbookComponent implements OnInit {
       const auth = getAuth();
       //create an user object
 
-      this.aUser = new User(form.value.email, form.value.fname, form.value.lname, new Date());
+      this.aUser = new MainUser(form.value.email, form.value.fname, form.value.lname, new Date());
       await CreateAccountService.createAccount(auth, form.value.email, form.value.password,this.toast, this.aUser, this.route, this.isLoading, this.appName);
     }
   }

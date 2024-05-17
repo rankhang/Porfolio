@@ -132,16 +132,18 @@ export class HomeGameComponent implements OnInit {
 
   constructor(private route: Router, private dialogRef: MatDialog, private elementRef: ElementRef, private sharedService: SharedService, private toast: NgToastService) {
     this.calTotalInvestmentEventSubscription = this.sharedService.getClickEvent().subscribe(()=>{
+      
+      
       this.getExchangeWalletTotalAndOriginalInvestment();
     });
 
     console.log("here in home");
-    
-    try{
-      this.firebaseApp = getApp();
-    }catch(e){
-      this.firebaseApp = initializeApp(environment.firebase);
-    }
+    this.firebaseApp = initializeFirebase.initialize();
+    // try{
+    //   this.firebaseApp = getApp();
+    // }catch(e){
+    //   this.firebaseApp = initializeApp(environment.firebase);
+    // }
     this.db = getFirestore(this.firebaseApp);
     this.auth = getAuth();
     this.user = this.auth.currentUser;

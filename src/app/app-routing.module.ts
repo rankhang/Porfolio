@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
-import { AuthGuard } from './auth-guard.service';
+import {  AuthGuardCrytoCurrencyGame } from './crytoGame-auth-guard.service';
 import { ContactComponent } from './contact/contact.component';
 import { CryptoTradingGameComponent } from './apps-list/crypto-trading-game/crypto-trading-game.component';
 import { GameModeComponent } from './apps-list/crypto-trading-game/game-mode/game-mode.component';
@@ -16,6 +16,9 @@ import { ResumeComponent } from './resume/resume.component';
 import { AppsListComponent } from './apps-list/apps-list.component';
 import { KatbookComponent } from './apps-list/katbook/katbook.component';
 import { KatBookHomepageComponent } from './apps-list/katbook/homepage/homepage.component';
+import { UserProfilePageComponent } from './apps-list/katbook/user-profile-page/profile-page.component';
+import { AuthGuardKatbook } from './katbook-auth-guard.service';
+
 
 
 
@@ -29,10 +32,11 @@ const routes: Routes = [
   {path: 'appsList', component: AppsListComponent},
   {path: 'appsList/cryptoCurrencyGame', component: CryptoTradingGameComponent},
   {path: 'appsList/cryptoCurrencyGame/sign-up', component: SignUpComponent},
-  {path: 'appsList/cryptoCurrencyGame/home',canActivate:[AuthGuard], component: HomeGameComponent}, //, 
+  {path: 'appsList/cryptoCurrencyGame/home',canActivate:[AuthGuardCrytoCurrencyGame], component: HomeGameComponent}, //, 
   {path: 'appsList/cryptoCurrencyGame/game-mode', component: GameModeComponent},
   {path: 'appsList/katbook/sign-in', component: KatbookComponent},
-  {path: 'appsList/katbook/home', component: KatBookHomepageComponent},
+  {path: 'appsList/katbook/home',canActivate:[AuthGuardKatbook], component: KatBookHomepageComponent},
+  {path: 'appsList/katbook/profile/:id', component: UserProfilePageComponent},
   
   {path: '**', component: PageNotFoundComponent}
 ];

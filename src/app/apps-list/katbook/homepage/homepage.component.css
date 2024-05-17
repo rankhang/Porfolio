@@ -152,6 +152,10 @@
     color: blue;
   }
   
+  .left_menu{
+    color: white
+  }
+  
   .story h4 {
     position: absolute;
     bottom: 20px;

@@ -42,7 +42,7 @@ import { SignUpComponent } from './apps-list/crypto-trading-game/sign-up/sign-up
 import { ErrorMessageModalComponent } from './error-message-modal/error-message-modal.component';
 import { HomeGameComponent } from './apps-list/crypto-trading-game/home-game/home-game.component';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth-guard.service';
+import { AuthGuardCrytoCurrencyGame } from './crytoGame-auth-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -84,6 +84,10 @@ import { MulticolorAnimationBackgroundComponent } from './multicolor-animation-b
 import { AppsListComponent } from './apps-list/apps-list.component';
 
 import { KatbookComponent } from './apps-list/katbook/katbook.component';
+import { UserProfilePageComponent } from './apps-list/katbook/user-profile-page/profile-page.component';
+import { AuthGuardKatbook } from './katbook-auth-guard.service';
+import { KatBookHomepageComponent } from './apps-list/katbook/homepage/homepage.component';
+
 
 
 
@@ -166,7 +170,9 @@ import { KatbookComponent } from './apps-list/katbook/katbook.component';
     ChatbotComponent,
     MulticolorAnimationBackgroundComponent,
     AppsListComponent,
-    KatbookComponent
+    KatbookComponent,
+    UserProfilePageComponent,
+    KatBookHomepageComponent
   ],
   imports: [
     BrowserModule,
@@ -212,7 +218,8 @@ import { KatbookComponent } from './apps-list/katbook/katbook.component';
     ScreenTrackingService,
     UserTrackingService, 
     AuthService,
-    AuthGuard
+    AuthGuardCrytoCurrencyGame,
+    AuthGuardKatbook
   ],
   bootstrap: [AppComponent]
 })
