@@ -18,7 +18,7 @@ export class KatBookHomepageComponent implements OnInit {
   auth:Auth 
   user:User|null 
   firebaseApp!: FirebaseApp;
-  static currentUser: MainUser | undefined;
+  static mainUser: MainUser | undefined;
   
   public classRef = KatBookHomepageComponent;
   
@@ -28,7 +28,7 @@ export class KatBookHomepageComponent implements OnInit {
     this.user = this.auth.currentUser;
   
     this.getUserData(this.user).then((user)=>{
-      KatBookHomepageComponent.currentUser = user;
+      KatBookHomepageComponent.mainUser = user;
     })
     this.route = route;
    }
@@ -48,7 +48,7 @@ export class KatBookHomepageComponent implements OnInit {
   }
 
    onClickToProfilePage(){
-     this.route?.navigate(["appsList/katbook/profile/", KatBookHomepageComponent.currentUser?.fname! + KatBookHomepageComponent.currentUser?.lname! + "/" +KatBookHomepageComponent.currentUser?.uid]);
+     this.route?.navigate(["appsList/katbook/profile/", KatBookHomepageComponent.mainUser?.fname! + KatBookHomepageComponent.mainUser?.lname! + "/" +KatBookHomepageComponent.mainUser?.uid]);
   }
 
 

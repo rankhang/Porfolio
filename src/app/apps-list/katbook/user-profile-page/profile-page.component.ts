@@ -11,14 +11,19 @@ import { MainUser } from '../models/MainUser';
 })
 export class UserProfilePageComponent implements OnInit {
   
-  userMetaData: MainUser | undefined ;
+  mainUserMetaData: MainUser | undefined ;
   
   constructor() {
-    this.userMetaData = KatBookHomepageComponent.currentUser;
+    this.mainUserMetaData = KatBookHomepageComponent.mainUser;
    }
 
   ngOnInit(): void {
 
+  }
+
+  onNewPostClick(){
+    console.log("here");
+    
   }
 
   
