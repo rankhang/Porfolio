@@ -25,7 +25,7 @@ export class AuthService{
         await signInWithEmailAndPassword(auth, form.value.email, form.value.password)
         .then((userCredential) => {
           // Signed in 
-          console.log("in auth");
+          
           
           const user = userCredential.user;
           // ...

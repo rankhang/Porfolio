@@ -14,6 +14,7 @@ export class AuthGuardKatbook implements CanActivate{
     canActivate(route: ActivatedRouteSnapshot, 
                 state: RouterStateSnapshot)
                 : boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+                              console.log("in can activate");
                               
         if(this.authService.isAuthenticated()){
             return true;

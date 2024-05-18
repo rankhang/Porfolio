@@ -87,6 +87,7 @@ import { KatbookComponent } from './apps-list/katbook/katbook.component';
 import { UserProfilePageComponent } from './apps-list/katbook/user-profile-page/profile-page.component';
 import { AuthGuardKatbook } from './katbook-auth-guard.service';
 import { KatBookHomepageComponent } from './apps-list/katbook/homepage/homepage.component';
+import { CreateNewPostModalComponent } from './apps-list/katbook/user-profile-page/create-new-post-modal/create-new-post-modal.component';
 
 
 
@@ -172,7 +173,8 @@ import { KatBookHomepageComponent } from './apps-list/katbook/homepage/homepage.
     AppsListComponent,
     KatbookComponent,
     UserProfilePageComponent,
-    KatBookHomepageComponent
+    KatBookHomepageComponent,
+    CreateNewPostModalComponent
   ],
   imports: [
     BrowserModule,

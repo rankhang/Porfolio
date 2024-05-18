@@ -21,10 +21,7 @@ export class UserProfilePageComponent implements OnInit {
 
   }
 
-  onNewPostClick(){
-    console.log("here");
-    
-  }
+
 
   
 

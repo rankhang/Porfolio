@@ -15,6 +15,8 @@ import { WalletService } from 'src/app/wallet.service';
 import { PasswordValidator } from './PasswordValidator';
 import { NgToastService } from 'ng-angular-popup';
 import { CreateAccountService } from 'src/app/firebase/createAccountService';
+import { AuthService } from 'src/app/auth.service';
+import { FocusMonitor } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-sign-up',
@@ -29,11 +31,12 @@ export class SignUpComponent implements OnInit {
   route: Router;
   isLoading = false;
   readonly appName = Name.CRYPTOCURRENCYGAME;
+  authService : AuthService;
   
 
-  constructor(fb: FormBuilder, route: Router, private toast: NgToastService) {
+  constructor(fb: FormBuilder, route: Router, private toast: NgToastService, auth: AuthService) {
     this.route = route;
-
+    this.authService = auth;
     this.signUpForm = fb.group({
       'email' : ['', Validators.compose([Validators.required, Validators.email])],
       'lname' :['', Validators.required],
@@ -58,7 +61,7 @@ export class SignUpComponent implements OnInit {
       //create an user object
       
       this.aUser = new MainUser(form.value.email,form.value.fname,form.value.lname, new Date());
-      await CreateAccountService.createAccount(auth,form.value.email, form.value.password, this.toast, this.aUser, this.route, this.isLoading, this.appName);
+      await CreateAccountService.createAccount(auth,form.value.email, form.value.password, this.toast, this.aUser, this.route, this.isLoading, this.appName,this.authService, form);
     }
     
   }

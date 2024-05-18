@@ -54,7 +54,8 @@ export class KatbookComponent implements OnInit {
       //create an user object
 
       this.aUser = new MainUser(form.value.email, form.value.fname, form.value.lname, new Date());
-      await CreateAccountService.createAccount(auth, form.value.email, form.value.password,this.toast, this.aUser, this.route, this.isLoading, this.appName);
+      await CreateAccountService.createAccount(auth, form.value.email, form.value.password,this.toast, this.aUser, this.route, this.isLoading, this.appName, this.authService, form);
+    
     }
   }
 

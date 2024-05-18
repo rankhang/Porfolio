@@ -13,9 +13,11 @@ import { Name } from 'src/app/name';
 import { WalletService } from 'src/app/wallet.service';
 import { NgToastService } from 'ng-angular-popup';
 import { Post } from '../apps-list/katbook/models/Post';
+import { AuthService } from '../auth.service';
+import { FormGroup } from '@angular/forms';
 
 export class CreateAccountService {
-    static async createAccount(auth: Auth, email: string, password: string, toast: NgToastService, aUser: MainUser, route: Router, isLoading: boolean, appNameString: String) {
+    static async createAccount(auth: Auth, email: string, password: string, toast: NgToastService, aUser: MainUser, route: Router, isLoading: boolean, appNameString: String, authService: AuthService, form:FormGroup) {
         await createUserWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
                 let user = userCredential.user;
@@ -23,12 +25,11 @@ export class CreateAccountService {
                 await this.writeNewUserToDB(aUser, userCredential, db, toast, isLoading);
                 await this.writeInitialCoinDataToDB(db, userCredential, toast, isLoading);
                 // await this.writeInitialKatbookDataToDB(userCredential, db);
-
-
+                await authService.signIn(form); // have to sign in first to pass the auth guard
                 if (appNameString === Name.CRYPTOCURRENCYGAME) {
                     route.navigate(['appsList/cryptoCurrencyGame/game-mode'])
                 } else if (appNameString === Name.KATBOOK) {
-                    
+                    route.navigate(['appsList/katbook/home']);
                 }
 
             }).catch((error) => {

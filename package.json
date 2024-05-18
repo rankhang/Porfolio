@@ -27,7 +27,7 @@
     "@popperjs/core": "^2.10.2",
     "@swimlane/ngx-charts": "^6.1.0",
     "bootstrap": "^5.2.0",
-    "bootstrap-icons": "^1.9.1",
+    "bootstrap-icons": "^1.11.3",
     "chart.js": "^3.6.0",
     "chartjs-plugin-annotation": "^1.4.0",
     "core-js": "^3.37.0",

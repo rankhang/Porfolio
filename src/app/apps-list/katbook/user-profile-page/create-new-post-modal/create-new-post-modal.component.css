@@ -1,0 +1,60 @@
+.user__avatar {
+    border-radius: 50%;
+    width: 45px;
+  }
+
+  .post__topInfo h3 {
+    font-size: medium;
+  }
+
+  .fa-images {
+    color: blue;
+    
+  }
+
+  .fa-pen{
+    color:teal;
+  }
+
+  .fa-user-tag{
+    color: green;
+  }
+
+  .fa-images, .fa-user-tag, .fa-pen{
+    font-size: x-large;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+  
+  .custom-file-upload {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+
+  .postAudienceIconSize{
+    font-size: xx-large;
+  }
+
+  .innerBox{
+    height: 300px;
+  }
+
+  textarea {
+    border: none;
+    overflow: auto;
+    outline: none;
+    width: 95%;
+    min-height: 250px;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+}
