@@ -5,6 +5,7 @@ import { Auth, updateProfile, User } from 'firebase/auth';
 import { collection, doc, Firestore, getFirestore, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, StorageReference, uploadString } from 'firebase/storage';
 import { NgToastService } from 'ng-angular-popup';
+import { uploadPhotoService } from 'src/app/photo-upload.service';
 
 @Component({
   selector: 'app-game-setting',
@@ -30,6 +31,7 @@ export class GameSettingComponent implements OnInit {
 
 
   isLoading = false;
+ 
 
  
 
@@ -76,13 +78,14 @@ export class GameSettingComponent implements OnInit {
   }
   
 
-  onChangeSubmit(form: any){
+  async onChangeSubmit(form: any){
     this.isLoading = true;
     //If new pic is uploaded
-    this.uploadNewPic();
+    await uploadPhotoService.uploadNewPic(this.firebaseApp, true, this.storageRef, this.user!, this.imagePath, this.toast
+    );
     //If last or first name updated
-    this.updateName(form);
-    
+    await this.updateName(form);
+    this.isLoading = false;
   }
 
   async toastMessage(){
@@ -118,55 +121,55 @@ export class GameSettingComponent implements OnInit {
     }
   }
 
-  async uploadNewPic(){
-    if(this.isUploadNewPic){
-      const storage = getStorage(this.firebaseApp);
-      this.storageRef = ref(storage, this.user?.email + '/profilePicture/' + this.user?.uid);
-      try{
-        await uploadString(this.storageRef, this.imagePath, 'data_url').then((snapshot) => {
+  // async uploadNewPic(){
+  //   if(this.isUploadNewPic){
+  //     const storage = getStorage(this.firebaseApp);
+  //     this.storageRef = ref(storage, this.user?.email + '/profilePicture/' + this.user?.uid);
+  //     try{
+  //       await uploadString(this.storageRef, this.imagePath, 'data_url').then((snapshot) => {
           
-          // Get the download URL
-            getDownloadURL(this.storageRef)
-            .then((url) => {
-              this.toastMessage();
-              this.isLoading = false;
-              // this.profilePicUrl = url;
-              updateProfile(this.user!, {
-                photoURL: url
-              }).catch((e)=>{
-                console.log(e);
-              });
+  //         // Get the download URL
+  //           getDownloadURL(this.storageRef)
+  //           .then((url) => {
+  //             this.toastMessage();
+  //             this.isLoading = false;
+  //             // this.profilePicUrl = url;
+  //             updateProfile(this.user!, {
+  //               photoURL: url
+  //             }).catch((e)=>{
+  //               console.log(e);
+  //             });
               
               
-            })
-            .catch((error) => {
-              // A full list of error codes is available at
-              // https://firebase.google.com/docs/storage/web/handle-errors
-              switch (error.code) {
-                case 'storage/object-not-found':
+  //           })
+  //           .catch((error) => {
+  //             // A full list of error codes is available at
+  //             // https://firebase.google.com/docs/storage/web/handle-errors
+  //             switch (error.code) {
+  //               case 'storage/object-not-found':
                   
-                  break;
-                case 'storage/unauthorized':
-                  // User doesn't have permission to access the object
+  //                 break;
+  //               case 'storage/unauthorized':
+  //                 // User doesn't have permission to access the object
                   
-                  break;
-                case 'storage/canceled':
-                  // User canceled the upload
+  //                 break;
+  //               case 'storage/canceled':
+  //                 // User canceled the upload
                   
-                  break;
-                case 'storage/unknown':
-                  // Unknown error occurred, inspect the server response
+  //                 break;
+  //               case 'storage/unknown':
+  //                 // Unknown error occurred, inspect the server response
                   
-                  break;
-              }
-            });
-              });
-      }catch(e){
-        this.toast.error({detail:'Upload failed' + e});
-      }
-    }
+  //                 break;
+  //             }
+  //           });
+  //             });
+  //     }catch(e){
+  //       this.toast.error({detail:'Upload failed' + e});
+  //     }
+  //   }
     
     
-  }
+  // }
 
 }

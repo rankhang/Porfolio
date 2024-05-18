@@ -20,6 +20,7 @@ export class SignInService{
             
             
             if(this.errorMessage == "Logged In Success"){
+              
                 if(appNameString === Name.CRYPTOCURRENCYGAME){
                     route.navigate(['appsList/cryptoCurrencyGame/home'])
                 }else if(appNameString === Name.KATBOOK){
