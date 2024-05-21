@@ -11,8 +11,17 @@ export class Account{
     posts?: Post[];
     friends?: Friend[]; // will need to update to graph structure
     photos?: Photo[];
+    profilePhotoURL!: string;
 
     
+    
+    public getProfilePhotoURL() : string {
+        return this.profilePhotoURL!;
+    }
+    public setProfilePhotoURL(v : string) {
+        this.profilePhotoURL = v;
+    }
+
 
     constructor(email: string|null, fname : string, lname: string, joinedDate: Date, uid?: string,posts?: Post[],
         friends?: Friend[], // will need to update to graph structure
@@ -26,6 +35,8 @@ export class Account{
         this.photos = photos;
         this.uid = uid;
     }
+    
+        
 
     
 

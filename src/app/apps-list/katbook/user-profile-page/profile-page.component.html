@@ -1,4 +1,4 @@
-<app-create-new-post-modal></app-create-new-post-modal>
+<app-create-new-post-modal [mainUserMetaData]="mainUserMetaData"></app-create-new-post-modal>
 <app-loading-screen [isLoading]="isLoading"></app-loading-screen>
 
 <div class="container" style="padding-left: 15%;">
@@ -13,8 +13,8 @@
                         <div class="row">
                             <div class="col">
                                 <label class="hoverable" for="fileInput">
-                                    <img class="profilePic float-start" [src]=" !isUploadNewPic && user?.photoURL
-                                    ? user?.photoURL
+                                    <img class="profilePic float-start" [src]=" !isUploadNewProfilePic && mainUserMetaData?.profilePhotoURL
+                                    ? mainUserMetaData?.profilePhotoURL
                                     : imagePath==undefined
                                         ?'../../../../assets/profile-blank-pic/blank-profile-picture-g33c247d1f_1280.png'
                                         :imagePath">

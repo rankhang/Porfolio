@@ -5,6 +5,8 @@ import { User, getAuth } from 'firebase/auth';
 import { collection, doc, Firestore, getDoc, getDocs, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
 import { FirebaseApp } from '@angular/fire/app';
 import { MainUser } from '../models/MainUser';
+import { GetUserMetaDataService } from 'src/app/firebase/get-main-user-data.service';
+import { initializeFirebase } from 'src/app/firebase/initialize-firebase';
 
 
 @Component({
@@ -13,42 +15,41 @@ import { MainUser } from '../models/MainUser';
   styleUrls: ['./homepage.component.css']
 })
 export class KatBookHomepageComponent implements OnInit {
-  route:Router | undefined;
-  db: Firestore 
-  auth:Auth 
-  user:User|null 
-  firebaseApp!: FirebaseApp;
-  static mainUser: MainUser | undefined;
-  
-  public classRef = KatBookHomepageComponent;
-  
-  constructor( route:Router) {
+  route: Router | undefined;
+  db: Firestore
+  auth: Auth
+  user: User | null
+  firebaseApp: FirebaseApp;
+  mainUser?: MainUser ;
+
+
+
+
+
+  constructor(route: Router) {
+    this.firebaseApp = initializeFirebase.initialize();
     this.db = getFirestore(this.firebaseApp);
     this.auth = getAuth();
     this.user = this.auth.currentUser;
-  
-    this.getUserData(this.user).then((user)=>{
-      KatBookHomepageComponent.mainUser = user;
-    })
+    console.log("RUnning again");
+    
+
+    
     this.route = route;
-   }
+  }
 
 
 
   ngOnInit(): void {
+    GetUserMetaDataService.getUserData(this.user, this.db).then((user) => {
+      this.mainUser = user;
+    })
   }
 
-  async getUserData(user: User|null){
-    const docRef =  doc(this.db, "User", user!.uid);
-    const dataSnap = await getDoc(docRef);
-    const userBasicData = dataSnap.data();
-    const userEmail = user?.email!;
-    const currentUser = new MainUser(userEmail, userBasicData!['fname'],userBasicData!['lname'], userBasicData!['joinedDate'],this.user?.uid);
-    return currentUser;
-  }
 
-   onClickToProfilePage(){
-     this.route?.navigate(["appsList/katbook/profile/", KatBookHomepageComponent.mainUser?.fname! + KatBookHomepageComponent.mainUser?.lname! + "/" +KatBookHomepageComponent.mainUser?.uid]);
+
+  onClickToProfilePage() {
+    this.route?.navigate(["appsList/katbook/profile/", this.mainUser?.fname! + this.mainUser?.lname! + "/" + this.mainUser?.uid]);
   }
 
 

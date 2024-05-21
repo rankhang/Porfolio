@@ -8,4 +8,7 @@ export class Name{
     static readonly FRIENDS = "Friends";
     static readonly FRIENDS_EXCEPT = "Friends except..."
     static readonly SPECIFIC_FRIENDS = "Specific friends"
+    static readonly IS_LOGGED_IN = "isLoggedIn";
+    static readonly USER_ID="userID";
+    static readonly USER = "User";
 }

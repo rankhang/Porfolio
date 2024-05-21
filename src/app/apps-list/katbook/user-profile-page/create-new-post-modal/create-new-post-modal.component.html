@@ -48,26 +48,36 @@
 
 
                 <div class="pt-4">
-                    <div *ngIf="!isPhotoIconClick">
-                        <textarea placeholder="What's on your mind, {{mainUserMetaData?.fname}}?"
-                        style="border: none; font-size: x-large;"></textarea>
+                    <div *ngIf="!isPhotoIconClick" container>
+                        <textarea [(ngModel)]="postText" placeholder="What's on your mind, {{mainUserMetaData?.fname}}?"
+                            style="border: none; font-size: x-large;"></textarea>
                     </div>
-                    <div *ngIf="!isTextEditIconClick">
-                        <div class="pt-4 pr-2 pl-2 border pb-4 border-secondary rounded p-2 mb-2 border-opacity-25">
-                            <div style="background-color: lightgray;" class="innerBox pt-1 pr-1 pl-1 border pb-1 border-secondary rounded border-opacity-25">
+                    <div *ngIf="!isTextEditIconClick" container>
+                        <div class="pt-4 pr-2 pl-2 border pb-4 border-secondary rounded p-2 mb-2 border-opacity-25 ">
+                            <div *ngIf="!isChosenPostPhotoUpload" style="background-color: lightgray;"
+                                class="innerBox pt-1 pr-1 pl-1 border pb-1 border-secondary rounded border-opacity-25 ">
                                 <label for="file-upload" class=" fs-3 custom-file-upload">
-                                    <div class="position-absolute top-50 start-50 translate-middle">
-                                        <i class="fa-solid fa-upload"></i> Add photos
+                                    <div class="position-absolute top-50 start-50 translate-middle photo_cover">
+                                        <div>
+                                            <i class="fa-solid fa-upload"></i> Add photos
+                                        </div>
                                     </div>
-                                    
                                 </label>
-                            <input id="file-upload" type="file" ((change))="onPhotoUpload($event)"/>
+                                <input id="file-upload" type="file" (change)="onPhotoUpload($event)"
+                                    multiple="true" />
+                            </div>
+                            <div *ngIf="isChosenPostPhotoUpload">
+                                <div>
+                                    <img *ngFor="let photo of chosenPostPhotosArray" class="post_photo_upload mx-auto p-2" [src]=" 
+                                photo">
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
-                    
 
-                    
+
+
                 </div>
 
                 <div class="pt-4 pr-2 pl-2 border pb-4 border-secondary rounded p-2 mb-2 border-opacity-25 container">
@@ -75,7 +85,8 @@
                         <div class="col-6 fs-5">Add to your post</div>
 
                         <div class="col-2"><button (click)="onTextClick()" type="button"
-                            style="background-color: white; border: none; outline: none;"><i class="fa-solid fa-pen"></i></button></div>
+                                style="background-color: white; border: none; outline: none;"><i
+                                    class="fa-solid fa-pen"></i></button></div>
 
                         <div class="col-2"><button (click)="onPhotoClick()" type="button"
                                 style="background-color: white; border: none; outline: none;"><i
@@ -88,7 +99,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Post</button>
+                <button type="button" class="btn btn-primary" (click)="onUploadNewPost()">Post</button>
             </div>
         </div>
     </div>

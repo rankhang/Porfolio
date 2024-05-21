@@ -18,8 +18,11 @@ export class initializeFirebase{
     static initialize(): FirebaseApp{
         let firebaseApp: FirebaseApp;
         try{
+          console.log("Get App");
+          
             firebaseApp = getApp();
           }catch(e){
+            console.log("initilize App");
             firebaseApp = initializeApp(environment.firebase);
           }
         return firebaseApp;

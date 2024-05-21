@@ -35,7 +35,7 @@ const routes: Routes = [
   {path: 'appsList/cryptoCurrencyGame/home',canActivate:[AuthGuardCrytoCurrencyGame], component: HomeGameComponent}, //, 
   {path: 'appsList/cryptoCurrencyGame/game-mode', component: GameModeComponent},
   {path: 'appsList/katbook/sign-in', component: KatbookComponent},
-  {path: 'appsList/katbook/home',canActivate:[AuthGuardKatbook], component: KatBookHomepageComponent},
+  {path: 'appsList/katbook/home', canActivate:[AuthGuardKatbook],component: KatBookHomepageComponent}, 
   {path: 'appsList/katbook/profile/:id', component: UserProfilePageComponent},
   
   {path: '**', component: PageNotFoundComponent}

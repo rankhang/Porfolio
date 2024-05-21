@@ -4,26 +4,28 @@ import { Photo } from "./Photo"
 
 export class Post{
     postAudience: String
-    body: String
+    body: string
     photos: Photo[]
-    tagPerson: Friend[]
-    ownerID: String
-    postID: String
-    visibleTo: Friend[]
-    comments: Comment[]
-    numberOfLikes: number
-    likeBy: Friend[]
+    tagPerson?: Friend[]
+    ownerID: string
+    postID: string
+    visibleTo?: Friend[]
+    comments?: Comment[]
+    numberOfLikes?: number
+    likeBy?: Friend[]
 
     constructor(postAudience: String,
-        body: String,
+        body: string,
         photos: Photo[],
-        tagPerson: Friend[],
-        ownerID: String,
-        postID: String,
-        visibleTo: Friend[],
-        comments: Comment[],
-        numberOfLikes: number,
-        likeBy: Friend[]){
+        
+        ownerID: string,
+        postID: string,
+        tagPerson?: Friend[],
+        
+        visibleTo?: Friend[],
+        comments?: Comment[],
+        numberOfLikes?: number,
+        likeBy?: Friend[]){
             this.photos = photos,
             this.body = body,
             this.postAudience = postAudience,

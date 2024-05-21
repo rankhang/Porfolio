@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
 import { collection } from "firebase/firestore";
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 @Injectable()
 export class AuthGuardCrytoCurrencyGame implements CanActivate{
 
@@ -15,7 +15,7 @@ export class AuthGuardCrytoCurrencyGame implements CanActivate{
     canActivate(route: ActivatedRouteSnapshot, 
                 state: RouterStateSnapshot)
                 : boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-                              
+        
         if(this.authService.isAuthenticated()){
             return true;
         }

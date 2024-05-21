@@ -59,9 +59,9 @@ export class KatbookComponent implements OnInit {
     }
   }
 
-    onSignInSubmit(form: FormGroup){
+    async onSignInSubmit(form: FormGroup){
       this.isLoading = true;
-     SignInService.signIn(form ,this.signInForm, this.authService, this.dialogRef, this.route, Name.KATBOOK);
+     await SignInService.signIn(form ,this.signInForm, this.authService, this.dialogRef, this.route, Name.KATBOOK);
      this.isLoading = false;
   }
 

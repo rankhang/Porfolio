@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, first, map, tap } from "rxjs";
 import { AuthService } from "./auth.service";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 
 @Injectable()
 export class AuthGuardKatbook implements CanActivate{
 
-    constructor(private authService: AuthService,
+    constructor(private _fAuth: AngularFireAuth, private authService: AuthService,
                 private router: Router){
 
     }
@@ -14,9 +16,18 @@ export class AuthGuardKatbook implements CanActivate{
     canActivate(route: ActivatedRouteSnapshot, 
                 state: RouterStateSnapshot)
                 : boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-                              console.log("in can activate");
-                              
-        if(this.authService.isAuthenticated()){
+                     
+                    
+                    
+        
+
+        
+                    
+        
+        
+        if(sessionStorage.getItem('isLoggedIn')){
+            console.log("already loggedin");
+            
             return true;
         }
         else{
