@@ -15,6 +15,9 @@ import { Firestore } from '@angular/fire/firestore';
 import { throwDialogContentAlreadyAttachedError } from '@angular/cdk/dialog';
 import { GetUserMetaDataService } from 'src/app/firebase/get-main-user-data.service';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
@@ -30,6 +33,9 @@ export class UserProfilePageComponent implements OnInit {
   user: User | null;
   auth?: Auth;
   db!: Firestore ;
+
+  file: any;
+  
 
   constructor(private toast: NgToastService) {
 
@@ -48,11 +54,15 @@ export class UserProfilePageComponent implements OnInit {
       }
     });
   }
+
  
   
   ngOnInit(): void {
     GetUserMetaDataService.getUserData(this.user, this.db).then((data) => {
       this.mainUserMetaData = data;
+      if(this.mainUserMetaData.profilePhotoURL != ''){
+        this.file = this.mainUserMetaData.profilePhotoURL;
+      }
     });
   }
 
@@ -62,22 +72,52 @@ export class UserProfilePageComponent implements OnInit {
   }
 
 
-  //Upload new profile pic
-  onSelectFile(event: any) {
-    this.isLoading = true;
-    var reader = new FileReader();
+  // //Upload new profile pic
+  // onSelectFile(event: any) {
+  //   this.isLoading = true;
+  //   var reader = new FileReader();
 
-    reader.readAsDataURL(event.target.files[0]); // read file as data url
+  //   reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+  //   reader.onload = async (event) => { // called once readAsDataURL is completed
+  //     this.imagePath = event.target!.result;
+  //     this.mainUserMetaData?.setProfilePhotoURL(await uploadPhotoService.uploadNewPic(this.firebaseApp, true, this.storageRef, this.user!, this.imagePath, this.toast, this.db));
+  //     this.isLoading = false;
+
+  //   }
+
+
+  // }
+
+
+  onFileChange(event: any) {
+    this.isLoading = true;
+    const files = event.target.files as FileList;
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]); // read file as data url
 
     reader.onload = async (event) => { // called once readAsDataURL is completed
-      this.imagePath = event.target!.result;
-      this.mainUserMetaData?.setProfilePhotoURL(await uploadPhotoService.uploadNewPic(this.firebaseApp, true, this.storageRef, this.user!, this.imagePath, this.toast, this.db));
+      this.file = event.target!.result;
+      this.mainUserMetaData?.setProfilePhotoURL(await uploadPhotoService.uploadNewPic(this.firebaseApp, true, this.storageRef, this.user!, this.file, this.toast, this.db));
       this.isLoading = false;
+      this.resetInput();   
+    } 
+    // if (files.length > 0) {
+    //   const _file = URL.createObjectURL(files[0]);
+    //   this.file = _file;
+      
+      
+    //   this.resetInput();   
+    // }
+  
+ }
 
-    }
-
-
+ resetInput(){
+  const input = document.getElementById('avatar-input-file') as HTMLInputElement;
+  if(input){
+    input.value = "";
   }
+}
 
 
 

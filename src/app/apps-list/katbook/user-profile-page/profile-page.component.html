@@ -1,6 +1,9 @@
 <app-create-new-post-modal [mainUserMetaData]="mainUserMetaData"></app-create-new-post-modal>
 <app-loading-screen [isLoading]="isLoading"></app-loading-screen>
 
+
+
+
 <div class="container" style="padding-left: 15%;">
     <div class="row">
         <div class="col">
@@ -9,6 +12,30 @@
         <div class="col-lg-8">
             <div class="panel profile-cover">
                 <div class="profile-cover__img">
+                    <div class="avatar-container">
+                        <div class="image-container" *ngIf="file; else placeholder"
+                        [ngClass]="{'box-shadow-avatar': !!file}"
+                        [ngStyle]="{backgroundImage: 'url(' + file + ')'}">
+                        </div>
+                    
+                        <ng-template #placeholder>
+                            <div class="image-container avatar-placeholder">
+                            </div>
+                        </ng-template>
+                    
+                        <label for="avatar-input-file">
+                            <div class="icon-wrapper">
+                                <input type="file" id="avatar-input-file" accept="image/*" (change)="onFileChange($event)" />
+                                <i class="fa-solid fa-pen"></i>
+                            </div>
+                            
+                        </label>
+                    
+                    </div>
+                   
+                </div>
+                
+                <!-- <div class="profile-cover__img">
                     <div class="container">
                         <div class="row">
                             <div class="col">
@@ -32,7 +59,7 @@
                         
                     </div>
                     
-                </div>
+                </div> -->
                 <div class="profile-cover__action bg--img" data-overlay="0.3">
                     <button class="btn btn-rounded btn-info">
                         <i class="fa fa-plus"></i>
@@ -204,3 +231,5 @@
     </div>
 
 </div>
+
+

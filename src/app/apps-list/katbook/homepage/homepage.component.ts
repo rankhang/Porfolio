@@ -31,10 +31,6 @@ export class KatBookHomepageComponent implements OnInit {
     this.db = getFirestore(this.firebaseApp);
     this.auth = getAuth();
     this.user = this.auth.currentUser;
-    console.log("RUnning again");
-    
-
-    
     this.route = route;
   }
 
