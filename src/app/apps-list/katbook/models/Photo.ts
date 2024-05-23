@@ -1,14 +1,16 @@
 export class Photo{
-    id: String;
-    description: String;
+    id: string;
+    description: string;
     date: Date;
+    url: string
 
 
-    constructor(id: String,
-        description: String,
-        date: Date){
+    constructor(id: string,
+        description: string,
+        date: Date, url:string){
             this.date = date;
             this.id = id;
             this.description = description;
+            this.url = url;
         }
 }

@@ -88,6 +88,10 @@ import { UserProfilePageComponent } from './apps-list/katbook/user-profile-page/
 import { AuthGuardKatbook } from './katbook-auth-guard.service';
 import { KatBookHomepageComponent } from './apps-list/katbook/homepage/homepage.component';
 import { CreateNewPostModalComponent } from './apps-list/katbook/user-profile-page/create-new-post-modal/create-new-post-modal.component';
+import { UnsaveWaringModalComponent } from './apps-list/katbook/unsave-waring-modal/unsave-waring-modal.component';
+import { PostAudienceTemplateComponent } from './apps-list/katbook/post-audience-template/post-audience-template.component';
+import { ProfilePageComponent } from './apps-list/katbook/profile-page/profile-page.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 
@@ -176,7 +180,9 @@ import { CreateNewPostModalComponent } from './apps-list/katbook/user-profile-pa
     KatbookComponent,
     UserProfilePageComponent,
     KatBookHomepageComponent,
-    CreateNewPostModalComponent
+    CreateNewPostModalComponent,
+    UnsaveWaringModalComponent,
+    PostAudienceTemplateComponent
   ],
   imports: [
     BrowserModule,
@@ -216,7 +222,8 @@ import { CreateNewPostModalComponent } from './apps-list/katbook/user-profile-pa
     MatCurrencyFormatModule,
     ClipboardModule,
     NgToastModule,
-    TooltipModule
+    TooltipModule,
+    MatGridListModule
   ],
   providers: [
     ScreenTrackingService,

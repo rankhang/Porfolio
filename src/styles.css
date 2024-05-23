@@ -3,6 +3,29 @@ body{
     background-color: #072d3c;
 }
 
+
+/*------ For small avatar image---------*/
+.image-container-small{
+    height: 50px;
+    width: 50px;
+    z-index: 1;
+    border-radius: 50%;
+    background-color: #fff;
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 10px 20px 20px #6c93001a;
+
+    &.avatar-placeholder-small{
+        background-image: url('../../../../assets/profile-blank-pic/blank-profile-picture-g33c247d1f_1280.png');
+    }
+}
+
+.avatar-container {
+    position: relative;
+    width: fit-content;
+}
+/*---------------------------------------*/
+
 .paddingLeft{
     position: absolute;
     left: 15%;

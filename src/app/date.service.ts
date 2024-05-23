@@ -1,5 +1,5 @@
 import { Month } from "./models/month.model";
-
+import * as moment from 'moment';
 export class DateStringGenerator{
     
     
@@ -24,5 +24,23 @@ export class DateStringGenerator{
                                  (hour < 10?"0":"") + hour + ":" +  
                                  (minute < 10?"0":"") + minute + ":" +
                                  (second < 10?"0":"") +  second;
+    }
+
+
+    static formatDateService(date: Date){
+        let formattedDate = "";
+        let current = new Date();
+        
+        if(date.getFullYear() != current.getFullYear()){
+           formattedDate = moment(date).format('LL');
+        }else if(moment(current).diff(date, 'days') < 7){
+          formattedDate =  moment(date).from(current)
+        }else if(date.getMonth() == current.getMonth()){
+          formattedDate = moment(date).format('MMM DD') + " at " + moment(date).format('LT');
+        }else if(date.getMonth() != current.getMonth()){
+          formattedDate = moment(date).format('MMM DD');
+        }
+        return formattedDate;
+        
     }
 }

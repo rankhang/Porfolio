@@ -31,9 +31,17 @@
 
     <div class="header__right">
         <div class="header__info">
-            <img class="user__avatar"
-            [src]=  "mainUser?.profilePhotoURL
-            ? mainUser?.profilePhotoURL : '../../../../assets/profile-blank-pic/blank-profile-picture-g33c247d1f_1280.png'">
+            <div class="avatar-container">
+                <div class="image-container-small" *ngIf="mainUser?.profilePhotoURL; else placeholder"
+                    [ngClass]="{'box-shadow-avatar': !!mainUser?.profilePhotoURL}"
+                    [ngStyle]="{backgroundImage: 'url(' + mainUser?.profilePhotoURL + ')'}">
+                </div>
+
+                <ng-template #placeholder>
+                    <div class="image-container-small avatar-placeholder-small">
+                    </div>
+                </ng-template>
+            </div>
             <h4>{{mainUser?.fname }} {{mainUser?.lname}}</h4>
         </div>
         <span class="material-icons"> add </span>
@@ -49,9 +57,17 @@
     <!-- sidebar starts -->
     <div class="sidebar">
         <div class="sidebarRow" (click)="onClickToProfilePage()">
-            <img class="user__avatar"
-            [src]=  "mainUser?.profilePhotoURL
-            ? mainUser?.profilePhotoURL : '../../../../assets/profile-blank-pic/blank-profile-picture-g33c247d1f_1280.png'" />
+            <div class="avatar-container">
+                <div class="image-container-small" *ngIf="mainUser?.profilePhotoURL; else placeholder"
+                    [ngClass]="{'box-shadow-avatar': !!mainUser?.profilePhotoURL}"
+                    [ngStyle]="{backgroundImage: 'url(' + mainUser?.profilePhotoURL + ')'}">
+                </div>
+
+                <ng-template #placeholder>
+                    <div class="image-container-small avatar-placeholder-small">
+                    </div>
+                </ng-template>
+            </div>
             <h4 class="left_menu">{{mainUser?.fname }} {{mainUser?.lname}}</h4>
         </div>
 
@@ -164,9 +180,17 @@
         <!-- message sender starts -->
         <div class="messageSender">
             <div class="messageSender__top">
-                <img class="user__avatar"
-                [src]=  "mainUser?.profilePhotoURL
-                ? mainUser?.profilePhotoURL : '../../../../assets/profile-blank-pic/blank-profile-picture-g33c247d1f_1280.png'"/>
+                <div class="avatar-container">
+                    <div class="image-container-small" *ngIf="mainUser?.profilePhotoURL; else placeholder"
+                        [ngClass]="{'box-shadow-avatar': !!mainUser?.profilePhotoURL}"
+                        [ngStyle]="{backgroundImage: 'url(' + mainUser?.profilePhotoURL + ')'}">
+                    </div>
+    
+                    <ng-template #placeholder>
+                        <div class="image-container-small avatar-placeholder-small">
+                        </div>
+                    </ng-template>
+                </div>
                 <form>
                     <input class="messageSender__input" placeholder="What's on your mind?" type="text" />
                 </form>

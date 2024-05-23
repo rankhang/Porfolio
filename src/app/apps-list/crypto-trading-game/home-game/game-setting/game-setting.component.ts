@@ -81,7 +81,7 @@ export class GameSettingComponent implements OnInit {
   async onChangeSubmit(form: any){
     this.isLoading = true;
     //If new pic is uploaded
-    await uploadPhotoService.uploadNewPic(this.firebaseApp, true, this.storageRef, this.user!, this.imagePath, this.toast,
+    await uploadPhotoService.uploadNewProfilePic(this.firebaseApp, true, this.storageRef, this.user!, this.imagePath, this.toast,
     this.db);
     //If last or first name updated
     await this.updateName(form);

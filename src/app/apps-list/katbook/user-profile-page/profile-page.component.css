@@ -8,9 +8,23 @@ body{
     z-index: 0;
 }
 
-.avatar-container {
-    position: relative;
-    width: fit-content;
+
+mat-grid-tile {
+    background: lightblue;
+  }
+
+.gallery-photo-cover{
+    width: 600px;
+    height: 600;
+    height: auto;
+    float: left;
+    margin: 3px;
+    padding: 3px;
+}
+
+.gallery-photo{
+    max-width: 100%;
+    height: auto;
 }
 
 .icon-wrapper {
@@ -53,9 +67,11 @@ body{
     box-shadow: 0 10px 20px 20px #6c93001a;
 }
 
+
+
 .image-container {
-    height: 170px;
-    width: 170px;
+    height: 160px;
+    width: 160px;
     z-index: 1;
     border-radius: 50%;
     background-color: #fff;
@@ -903,3 +919,6 @@ li.list-group-item:first-child {
   #fileInput{
     display: none;
   }
+
+
+ 

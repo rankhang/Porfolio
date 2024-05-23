@@ -11,4 +11,6 @@ export class Name{
     static readonly IS_LOGGED_IN = "isLoggedIn";
     static readonly USER_ID="userID";
     static readonly USER = "User";
+    static readonly POST_AUDIENCE_TEMPLATE = "postAudienceTemplate";
+    static readonly CREATE_NEW_POST_AUDIENCE_TEMPLATE = "createNewPostAudienceTemplate";
 }

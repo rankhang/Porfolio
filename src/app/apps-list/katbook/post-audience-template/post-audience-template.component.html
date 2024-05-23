@@ -1,0 +1,39 @@
+<div *ngIf="postAudience===onlyMeAudience" class="container">
+    
+            <i class="fa-solid fa-lock"></i> {{onlyMeAudience}}
+        
+            
+        
+            <i *ngIf="for === createNewPostAudienceTemplate" class="fa-solid fa-caret-down"></i>
+        
+    
+    
+    
+</div>
+<div *ngIf="postAudience===publicAudience" class="container">
+    
+            <i class="fa-solid fa-earth-americas"></i> {{publicAudience}}
+        
+             
+        
+            <i *ngIf="for === createNewPostAudienceTemplate"
+            class="fa-solid fa-caret-down"></i>
+     
+     
+   
+</div>
+<div *ngIf="postAudience===friendsAudience" class="container">
+    <i class="fa-solid fa-user-group"> </i> {{friendsAudience}}
+    <i *ngIf="for === createNewPostAudienceTemplate"
+        class="fa-solid fa-caret-down"></i>
+</div>
+<div *ngIf="postAudience===friendsExceptAudience" class="container">
+    <i class="bi bi-person-x"> </i> {{friendsExceptAudience}}
+    <i *ngIf="for === createNewPostAudienceTemplate"
+        class="fa-solid fa-caret-down"></i>
+</div>
+<div *ngIf="postAudience===specificFriendsAudience" class="container">
+    <i class="bi bi-person-circle"> </i> {{specificFriendsAudience}}
+    <i *ngIf="for === createNewPostAudienceTemplate"
+        class="fa-solid fa-caret-down"></i>
+</div>
