@@ -1,6 +1,6 @@
 
 import { Conditional } from '@angular/compiler';
-import { AfterContentChecked, Component, ElementRef, HostListener, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, ElementRef, HostListener, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 
 import {ScrollingModule} from '@angular/cdk/scrolling';
@@ -42,7 +42,7 @@ import { getDownloadURL, ref, getStorage, StorageReference,  } from 'firebase/st
   styleUrls: ['./home-game.component.css'],
   
 })
-export class HomeGameComponent implements OnInit {
+export class HomeGameComponent implements OnInit, OnDestroy {
   
   calTotalInvestmentEventSubscription: Subscription;
 
@@ -158,6 +158,9 @@ export class HomeGameComponent implements OnInit {
     this.getAllTransactionData(this.user);
     
    }
+  ngOnDestroy(): void {
+    this.calTotalInvestmentEventSubscription.unsubscribe();
+  }
 
    
 
@@ -195,6 +198,8 @@ export class HomeGameComponent implements OnInit {
       // this.transactionSort = this.transactions;
     });
   }
+
+  
 
 
   //Get balance array to display on the top left of the game to show all the balances when user  click on that
